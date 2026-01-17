@@ -1,0 +1,49 @@
+.payment-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.payment-modal {
+  background: white;
+  width: 340px;
+  padding: 22px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.pay-amount {
+  margin: 12px 0;
+  font-weight: 600;
+}
+
+.methods {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.methods button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  background: #f1f5f9;
+}
+
+.confirm-pay {
+  width: 100%;
+  padding: 10px;
+  background: black;
+  color: white;
+  border-radius: 10px;
+}
+
+.cancel-pay {
+  margin-top: 8px;
+  background: none;
+  color: #64748b;
+}

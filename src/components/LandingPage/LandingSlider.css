@@ -1,0 +1,60 @@
+.hero-container {
+  padding: 20px 30px;
+}
+
+/* MAIN BANNER */
+.hero-banner {
+  background: #fde68a;
+  border-radius: 30px;
+  height: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 60px;
+}
+
+/* LEFT SIDE */
+.hero-left h1 {
+  font-size: 38px;
+  font-weight: 700;
+}
+
+.hero-left span {
+  font-weight: 800;
+}
+
+.hero-left p {
+  color: #444;
+  margin: 10px 0;
+}
+
+.hero-btn {
+  background: black;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 26px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* THUMB IMAGES */
+.hero-thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.hero-thumbs img {
+  width: 48px;
+  height: 40px;
+  background: white;
+  border-radius: 10px;
+  padding: 5px;
+  object-fit: contain;
+}
+
+/* RIGHT SIDE IMAGE */
+.hero-right img {
+  width: 340px;
+  transform: rotate(-12deg);
+}

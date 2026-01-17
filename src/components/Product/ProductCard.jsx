@@ -1,7 +1,45 @@
 // ProductCard.jsx
+import { useState } from "react";
 import "./productCard.css";
 
 const ProductCard = ({ product, onAdd, isInCart }) => {
+  const [showFullTitle, setShowFullTitle] = useState(false);
+
+  const renderTitle = (title, wordLimit = 3) => {
+    const words = title.split(" ");
+
+    // If title is short, show as is
+    if (words.length <= wordLimit) return title;
+
+    // Expanded state
+    if (showFullTitle) {
+      return (
+        <>
+          {title}
+          <span
+            style={{ color: "#9ca3af", cursor: "pointer" }}
+            onClick={() => setShowFullTitle(false)}
+          >
+            {" "}less
+          </span>
+        </>
+      );
+    }
+
+    // Collapsed state
+    return (
+      <>
+        {words.slice(0, wordLimit).join(" ")}
+        <span
+          style={{ color: "#9ca3af", cursor: "pointer" }}
+          onClick={() => setShowFullTitle(true)}
+        >
+          {" "}...more
+        </span>
+      </>
+    );
+  };
+
   return (
     <div className="product-card-ui">
       <div className="product-image-box">
@@ -9,7 +47,7 @@ const ProductCard = ({ product, onAdd, isInCart }) => {
       </div>
 
       <div className="product-info">
-        <h4>{product.title}</h4>
+        <h4>{renderTitle(product.title)}</h4>
         <p className="category">{product.category}</p>
 
         <div className="price-row">

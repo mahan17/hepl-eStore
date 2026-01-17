@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useRef, useEffect } from 'react';
 
 import { loginActions } from '../store/uiLogin';
-import { setCategory } from '../store/productSlice';
+
 
 import { FaUserCircle } from 'react-icons/fa';
 import { FaShoppingCart } from 'react-icons/fa';
@@ -11,21 +11,15 @@ import { FaShoppingCart } from 'react-icons/fa';
 import './navbar.css';
 import logo from '../../assets/hepl-logo.png'
 import SearchBar from '../searchBar/SearchBar';
+import CategoryBar from './CategoryBar';
 
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const categories = useSelector(state => state.products.categories);
-  const selectedCategory = useSelector(state => state.products.selectedCategory);
   const cartQuantity = useSelector(state => state.cart.totalQuantity);
-  const isLoggedIn = useSelector(state => state.login.isLoggedIn);
-
-  const handleLogout = () => {
-    dispatch(loginActions.logout());
-    navigate('/login');
-  };
+ 
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const profileRef = useRef(null);
@@ -49,8 +43,8 @@ const Navbar = () => {
         <div className="navbar-left brand-premium">
           <img src={logo} alt="HEPL Logo" className="navbar-logo" />
           <div className="brand-text">
-            <h1>HEPL</h1>
-            <span>eStore</span>
+            {/* <h1>HEPL</h1> */}
+            <span><h1>e-store</h1></span>
           </div>
         </div>
         {/* ----------- */}
@@ -94,21 +88,8 @@ const Navbar = () => {
           )}
         </div>
       </div>
-
-          {/*--------------------------*/}
       </nav>
-
-      <div className="category-bar">
-        {categories.map(cat => (
-          <button
-            key={cat}
-            className={`category-pill ${selectedCategory === cat ? 'active' : ''}`}
-            onClick={() => dispatch(setCategory(cat))}
-          >
-            {cat.toUpperCase()}
-          </button>
-        ))}
-      </div>
+      <CategoryBar />
     </header>
   );
 };

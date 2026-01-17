@@ -119,50 +119,6 @@ h1{
   color: #f87171;
 }
 
-/*! CATEGORY BAR (FLOATING) */
-.category-bar {
-  display: flex;
-  justify-content: center;   /* 👈 CENTER */
-  align-items: center;
-
-  gap: 12px;
-  padding: 10px 20px;
-
-  position: relative;
-  z-index: 999;
-
-  white-space: nowrap;
-  scrollbar-width: none;
-  background: rgba(255, 255, 255, 0.15); /* semi-transparent white */
-  backdrop-filter: blur(10px);           /* frosted glass blur */
-  border-radius: 12px;
-}  
-
-/* CATEGORY PILL */
-.category-pill {
-  background: rgba(255, 255, 255, 0.3); /* slightly transparent pill */
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  color: #0f172a;
-  padding: 6px 14px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: all 0.25s ease;
-}
-
-/* HOVER */
-.category-pill:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-/* ACTIVE CATEGORY */
-.category-pill.active {
-  background: #0f172a;
-  color: white;
-  border-color: #0f172a;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
 .cart-btn {
   position: relative;
 }
