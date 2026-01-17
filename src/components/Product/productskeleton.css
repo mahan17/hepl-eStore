@@ -1,0 +1,65 @@
+.skeleton {
+  pointer-events: none;
+}
+
+.skeleton-img {
+  height: 180px;
+  border-radius: 12px;
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 25%,
+    #f3f4f6 37%,
+    #e5e7eb 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeleton-text {
+  height: 14px;
+  margin-top: 10px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 25%,
+    #f3f4f6 37%,
+    #e5e7eb 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeleton-text.title {
+  width: 80%;
+}
+
+.skeleton-text.category {
+  width: 50%;
+}
+
+.skeleton-text.price {
+  width: 40%;
+}
+
+.skeleton-btn {
+  height: 38px;
+  margin-top: 14px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 25%,
+    #f3f4f6 37%,
+    #e5e7eb 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
