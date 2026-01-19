@@ -6,6 +6,8 @@ import Navbar from '../Navbar/Navbar';
 import LandingSlider from '../LandingPage/LandingSlider';
 import Products from '../Product/Products';
 import Footer from './Footer';
+import CategoryBar from '../Navbar/CategoryBar';
+import '../Navbar/CategoryBar.css';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -22,6 +24,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
+      <CategoryBar />
       {/* {products.length > 0 && (
         <LandingSlider products={products.slice(0, 5)} />
       )} */}

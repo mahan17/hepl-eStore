@@ -28,6 +28,8 @@
   cursor: pointer;
   font-size: 13px;
   transition: all 0.25s ease;
+
+  font-family: "ValentineCoolday", cursive;
 }
 
 /* HOVER */

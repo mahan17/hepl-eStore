@@ -4,7 +4,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "./LandingSlider.css";
 
-const LandingSlider = ({ products }) => {
+const LandingSlider = ({ products = [] }) => {
+  if (products.length === 0) return null;
+
   return (
     <div className="hero-container">
       <Swiper
@@ -14,8 +16,9 @@ const LandingSlider = ({ products }) => {
         navigation
       >
         {products.map((item) => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={item._id}>
             <div className="hero-banner">
+
               {/* LEFT */}
               <div className="hero-left">
                 <h1>
@@ -28,16 +31,24 @@ const LandingSlider = ({ products }) => {
                 <button className="hero-btn">Discover</button>
 
                 <div className="hero-thumbs">
-                  {products.slice(0, 3).map((p) => (
-                    <img key={products.id} src={p._thumbnail} alt="" />
+                  {products.slice(0, 3).map((p, index) => (
+                    <img
+                      key={`${item._id}-thumb-${index}`}
+                      src={p.image || p.thumbnail}
+                      alt={p.title}
+                    />
                   ))}
                 </div>
               </div>
 
               {/* RIGHT */}
               <div className="hero-right">
-                <img src={item.thumbnail} alt={item.title} />
+                <img
+                  src={item.image || item.thumbnail}
+                  alt={item.title}
+                />
               </div>
+
             </div>
           </SwiperSlide>
         ))}

@@ -78,9 +78,15 @@ const Navbar = () => {
               <button
                 className="logout"
                 onClick={() => {
+                   // 1️⃣ clear auth storage
+                  localStorage.removeItem("isLoggedIn");
+
+                  // 2️⃣ clear redux login state
                   dispatch(loginActions.logout());
-                  navigate('/login');
-                }}
+
+                  // 3️⃣ replace history (CRITICAL)
+                  navigate("/login", { replace: true });
+                              }}
               >
                 Logout
               </button>
@@ -89,7 +95,7 @@ const Navbar = () => {
         </div>
       </div>
       </nav>
-      <CategoryBar />
+      {/* <CategoryBar /> */}
     </header>
   );
 };

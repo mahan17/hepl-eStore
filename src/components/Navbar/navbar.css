@@ -7,11 +7,6 @@ html {
   top: 0;
   z-index: 2000;
 }
-h1{
-  font-style: italic;
-  font-size: 25px;
-  margin-left: 20px;
-}
 
 /*! NAVBAR */
 .navbar {
@@ -46,9 +41,11 @@ h1{
 
 .brand-text h1 {
   font-size: 22px;
-  font-weight: 800;
-  background: linear-gradient(90deg, #f5f5f5, #ffffff);
-  margin: 0;
+  font-weight: 200;
+  background: linear-gradient(90deg, #fffefe, #ffffff);
+  margin-left: 20px;
+
+  font-family: "StoriesThinking", cursive;
 }
 
 .brand-text span {

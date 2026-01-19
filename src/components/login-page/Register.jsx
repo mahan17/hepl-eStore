@@ -40,17 +40,41 @@ const Register = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (validate()) {
-      alert('Registered Successfully!');
-      navigate('/'); // redirect to login
+    if (!validate()) return;
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username,
+          password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Registration failed");
+        return;
+      }
+
+      alert("Registered Successfully!");
+      navigate("/"); // go to login page
+
+    } catch (error) {
+      alert("Server error. Try again later.");
     }
   };
 
-  const backNavigate = () => {
-      navigate('/'); // redirect to login
+  const backNavigate = (e) => {
+    e.preventDefault();
+    navigate('/');
   };
 
   return (

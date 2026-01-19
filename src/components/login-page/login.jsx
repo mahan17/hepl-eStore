@@ -15,25 +15,54 @@ const Login = () => {
 
   const navigate = useNavigate(); // ✅ hook to navigate
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const submitHandler = async (e) => {
+  e.preventDefault();
 
-    dispatch(
-      loginActions.validateForm({
-        username,
-        password,
-      })
-    );
+  dispatch(
+    loginActions.validateForm({
+      username,
+      password,
+    })
+  );
 
-    // If no errors, redirect to Home
-    if (
-      username.includes('@') &&
-      username.includes('.com') &&
-      password.length >= 6
-    ) {
-      navigate('/home'); // redirect to home
+  // basic frontend validation
+  if (
+    !username.includes('@') ||
+    !username.includes('.com') ||
+    password.length < 6
+  ) {
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.message);
+      return;
     }
-  };
+
+      alert("Login Successful");
+
+      // save login state
+      localStorage.setItem("isLoggedIn", "true");
+
+      // prevent going back to login
+      navigate("/home", { replace: true });
+
+
+  } catch (error) {
+    alert("Server error. Try again later.");
+  }
+}
 
   return (
     <>
