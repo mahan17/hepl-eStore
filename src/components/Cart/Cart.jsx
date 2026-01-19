@@ -31,6 +31,12 @@ const Cart = () => {
 
   return (
   <section className="cart-container">
+    <Navbar
+      showHomeIcon={true}
+      showSearchBar={false}
+      activePage="cart"
+    />
+
     <h2>Your Cart</h2>
 
     <div className="cart-layout">

@@ -3,6 +3,12 @@
   flex-direction: column;
   gap: 14px;
   margin-bottom: 24px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.payment-container h2{
+  margin-left: 20px;
 }
 
 .payment-product {
@@ -26,6 +32,7 @@
 
 .product-total {
   font-weight: 600;
+  color: #22c55e;
 }
 
 .row {
@@ -35,6 +42,8 @@
   padding: 12px 0;
   font-size: 15px;
   color: #374151;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .row.total {
@@ -53,7 +62,7 @@
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 24px;
+  margin: 24px 20px 20px 20px;
 }
 
 .back-cart-btn {
@@ -63,7 +72,7 @@
   border: 1px solid #d1d5db;
   background: #ffffff;
   color: #374151;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
 }

@@ -41,6 +41,7 @@ const Products = () => {
 
   return (
     <section className="products-container">
+      <h3>Products</h3>
     <div className="products-grid">
       {filteredProducts.length === 0 && (
         <p className="no-results">No products found</p>

@@ -47,7 +47,7 @@ const ProductCard = ({ product, onAdd, isInCart }) => {
       </div>
 
       <div className="product-info">
-        <h4>{renderTitle(product.title)}</h4>
+        <h4 >{renderTitle(product.title)}</h4>
         <p className="category">{product.category}</p>
 
         <div className="price-row">

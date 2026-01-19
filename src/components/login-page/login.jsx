@@ -4,7 +4,7 @@ import { loginActions } from '../store/uiLogin';
 import { useNavigate } from 'react-router-dom';
 import ForgotPassword from './ForgetPassword';
 import './login.css';
-import logo from '../images/hepl-logo.png';
+import logo from '../../assets/images/hepl-logo.png';
 
 const Login = () => {
   const dispatch = useDispatch();

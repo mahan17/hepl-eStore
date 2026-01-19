@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import DummyPaymentModal from './DummyPaymentModal';
+import Navbar from '../Navbar/Navbar';
+import Footer from '../HomePage/Footer';
 import './payment.css';
 
 const Payment = () => {
@@ -25,6 +27,8 @@ const Payment = () => {
   return (
     <>
       <section className="payment-container">
+        <Navbar showHomeIcon={true}
+                showSearchBar={false}/>
         <h2>Payment Summary</h2>
 
         <div className="payment-products">
@@ -72,6 +76,7 @@ const Payment = () => {
             </button>
           </div>
         </div>
+        <Footer />
       </section>
 
       {showPayment && (
