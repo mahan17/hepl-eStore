@@ -5,13 +5,14 @@ import { sendCartData } from "../store/cart-actions";
 const CartWatcher = () => {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    // ❌ DO NOT SAVE UNTIL CART IS RESTORED
-    if (!cart.isInitialized) return;
+    if (!cart.isInitialized || !user) return;
 
-    dispatch(sendCartData(cart));
-  }, [cart, dispatch]);
+    // ✅ SAVE CART PER USER
+    dispatch(sendCartData(cart, user.username));
+  }, [cart, dispatch, user]);
 
   return null;
 };

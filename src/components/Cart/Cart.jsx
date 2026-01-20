@@ -6,6 +6,7 @@ import './cart.css';
 import { addressActions } from '../store/addressSlice';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../HomePage/Footer';
+import AddressBox from "../Cart/AddressBox";
 
 
 const Cart = () => {
@@ -63,7 +64,7 @@ const Cart = () => {
 
             <button
               className="remove-btn"
-              onClick={() => dispatch(cartActions.removeFromCart(item._id))}
+              onClick={() => dispatch(cartActions.removeItemCompletely(item._id))}
             >
               Remove
             </button>
@@ -74,16 +75,7 @@ const Cart = () => {
       {/* RIGHT SIDE — ADDRESS + SUMMARY */}
       <div className="cart-right">
 
-        {/* ADDRESS BOX */}
-        <div className="address-box">
-          <h3>Delivery Address</h3>
-
-          <input type="text" placeholder="Full Name" />
-          <input type="text" placeholder="Phone Number" />
-          <textarea placeholder="Full Address"></textarea>
-          <input type="text" placeholder="City" />
-          <input type="text" placeholder="Pincode" />
-        </div>
+         <AddressBox />
 
         {/* EXISTING SUMMARY (UNCHANGED) */}
         <div className="cart-summary">

@@ -12,6 +12,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 30px;
+  margin-left: 50px;
 }
 
 .footer-section h3 {

@@ -48,7 +48,6 @@ const Payment = () => {
             </div>
           ))}
         </div>
-
         <div className="payment-card">
           <div className="row">
             <span>Total Items</span>

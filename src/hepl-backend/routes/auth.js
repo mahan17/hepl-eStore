@@ -4,7 +4,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-// REGISTER
+/* 🔹 REGISTER */
 router.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -19,19 +19,19 @@ router.post("/register", async (req, res) => {
     const user = new User({
       username,
       password: hashedPassword,
+      role: "user", // ✅ default role
     });
 
     await user.save();
 
     res.status(201).json({ message: "Registered successfully" });
-
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
 
-// LOGIN
+/* 🔹 LOGIN */
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -46,9 +46,13 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    res.status(200).json({ message: "Login successful" });
-
+    res.status(200).json({
+      message: "Login successful",
+      username: user.username,
+      role: user.role, // ✅ send role
+    });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });

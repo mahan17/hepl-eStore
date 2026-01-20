@@ -58,7 +58,27 @@ const cartSlice = createSlice({
         existingItem.quantity--;
         existingItem.totalPrice -= existingItem.price;
       }
-      console.log("Removing ID:", action.payload);
+    },
+    
+    removeItemCompletely(state, action) {
+      const id = action.payload;
+
+      const existingItem = state.items.find(
+        item => item._id === id
+      );
+
+      if (!existingItem) return;
+
+      state.totalQuantity -= existingItem.quantity;
+
+      state.items = state.items.filter(
+        item => item._id !== id
+      );
+    },
+
+    clearCart(state) {
+      state.items = [];
+      state.totalQuantity = 0;
     }
 
   },

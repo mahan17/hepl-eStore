@@ -1,37 +1,50 @@
-import { cartActions } from './cartSlice';
+import { cartActions } from "./cartSlice";
 
-const CART_API_URL = 'http://localhost:5000/api/cart';
+const CART_API_URL = "http://localhost:5000/api/cart";
 
-/* 🔥 SAVE CART TO MONGODB */
+/* 🔥 SAVE CART TO MONGODB (USER-BASED) */
 export const sendCartData = (cart) => {
-  const cleanedItems = cart.items.filter(item => item.quantity > 0);
   return async () => {
     try {
+      const storedUser = localStorage.getItem("user");
+      const username = storedUser ? JSON.parse(storedUser).username : null;
+
+      if (!username) return;
+
+      const cleanedItems = cart.items.filter(item => item.quantity > 0);
+
       await fetch(CART_API_URL, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        
         body: JSON.stringify({
+          username,
           items: cleanedItems,
-          totalQuantity: cleanedItems.reduce(
-            (sum, item) => sum + item.quantity,
-            0
-          ),
         }),
       });
     } catch (error) {
-      console.error('Saving cart failed', error);
+      console.error("Saving cart failed", error);
     }
   };
 };
 
-/* 🔥 FETCH CART FROM MONGODB (ON REFRESH) */
+/* 🔥 FETCH CART FROM MONGODB (USER-BASED) */
 export const fetchCartData = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch(CART_API_URL);
+      const storedUser = localStorage.getItem("user");
+      const username = storedUser ? JSON.parse(storedUser).username : null;
+
+      if (!username) {
+        dispatch(cartActions.clearCart());
+        return;
+      }
+
+      const response = await fetch(
+        `${CART_API_URL}?username=${username}`
+      );
+
       const data = await response.json();
 
       dispatch(
@@ -41,7 +54,7 @@ export const fetchCartData = () => {
         })
       );
     } catch (error) {
-      console.error('Fetching cart failed', error);
+      console.error("Fetching cart failed", error);
     }
   };
 };

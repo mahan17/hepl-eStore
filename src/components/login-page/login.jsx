@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { addressActions } from "../store/addressSlice";
 import { loginActions } from '../store/uiLogin';
 import { useNavigate } from 'react-router-dom';
 import ForgotPassword from './ForgetPassword';
@@ -52,17 +53,53 @@ const Login = () => {
 
       alert("Login Successful");
 
-      // save login state
+
+    const addressRes = await fetch(
+        `http://localhost:5000/api/address?username=${username}`
+      );
+      const addressData = await addressRes.json();
+
+      if (addressData) {
+        dispatch(addressActions.loadAddress(addressData));
+      } else {
+        dispatch(addressActions.clearAddress());
+      }
+
+      // ✅ CREATE USER OBJECT (IMPORTANT)
+      const userData = {
+        username: username, // using email as unique username
+        email: username,
+        role: data.role,
+      };
+
+      // ✅ SAVE LOGIN STATE
       localStorage.setItem("isLoggedIn", "true");
 
+      // ✅ SAVE USER OBJECT
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      // ✅ LOAD ADDRESS INTO REDUX (CRITICAL)
+      const savedAddress = JSON.parse(
+        localStorage.getItem(`address_${username}`)
+      );
+
+      if (savedAddress) {
+        dispatch(addressActions.loadAddress(savedAddress));
+      } else {
+        dispatch(addressActions.clearAddress());
+      }
+
       // prevent going back to login
-      navigate("/home", { replace: true });
+      if (data.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/home", { replace: true });
+      }
 
-
-  } catch (error) {
-    alert("Server error. Try again later.");
+    } catch (error) {
+        alert("Server error. Try again later.");
+      }
   }
-}
 
   return (
     <>

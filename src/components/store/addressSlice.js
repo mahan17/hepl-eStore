@@ -12,9 +12,15 @@ const addressSlice = createSlice({
   name: 'address',
   initialState,
   reducers: {
-    saveAddress(state, action) {
+    updateAddress(state, action) {
+      const { name, value } = action.payload;
+      state[name] = value;
+    },
+
+    loadAddress(state, action) {
       return action.payload;
     },
+
     clearAddress() {
       return initialState;
     },

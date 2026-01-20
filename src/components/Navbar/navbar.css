@@ -18,6 +18,7 @@ html {
   z-index: 2001;
   height: 70px;
   width: 100vw;
+  padding: 0 24px;
 
   background-color: #ffffff;
   color: rgb(16, 150, 195);
@@ -25,13 +26,15 @@ html {
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 24px;
+  margin-right: 10px;
 }
 
 .navbar-left {
   display: flex;
   align-items: center;
   gap: 10px;
+  /* margin-left: 40px; */
 }
 .brand-premium {
   display: flex;
@@ -71,6 +74,7 @@ html {
   cursor: pointer;
   color: #64748b;
   transition: color 0.2s ease, transform 0.2s ease;
+  margin-left: 20px;
 }
 
 .home-icon-wrapper:hover,
