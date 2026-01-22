@@ -1,9 +1,21 @@
 import { useEffect, useState } from "react";
-import Navbar from "../Navbar/Navbar";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  fetchProducts,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+} from "../store/adminProductSlice";
+
 import "./admin.css";
 
 const AdminProducts = () => {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const { products, loading } = useSelector(
+    (state) => state.adminProducts
+  );
+
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState(null);
 
@@ -11,28 +23,18 @@ const AdminProducts = () => {
     title: "",
     price: "",
     category: "",
-    image: null
+    image: null,
   });
 
   /* =======================
-     FETCH PRODUCTS (READ)
+     FETCH
   ======================== */
-  const fetchProducts = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/api/products");
-      const data = await res.json();
-      setProducts(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   /* =======================
-     HANDLE INPUTS
+     HANDLERS
   ======================== */
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,76 +45,29 @@ const AdminProducts = () => {
   };
 
   /* =======================
-     ADD / UPDATE PRODUCT
+     SUBMIT
   ======================== */
-  const submitProduct = async () => {
-  if (!formData.title || !formData.price || !formData.category) {
-    alert("All fields are required");
-    return;
-  }
-
-  const data = new FormData();
-  data.append("title", formData.title);
-  data.append("price", formData.price);
-  data.append("category", formData.category);
-  if (formData.image) data.append("image", formData.image);
-
-  try {
-    const res = await fetch(
-      editId
-        ? `http://localhost:5000/api/products/${editId}`
-        : "http://localhost:5000/api/products",
-      {
-        method: editId ? "PUT" : "POST",
-        body: data,
-      }
-    );
-
-    // 🔴 IMPORTANT CHECK
-    if (!res.ok) {
-      const errorText = await res.text(); // read HTML/text safely
-      console.error("Backend error:", errorText);
-      alert("Failed to save product. Check backend logs.");
+  const submitProduct = () => {
+    if (!formData.title || !formData.price || !formData.category) {
+      alert("All fields are required");
       return;
     }
 
-    const result = await res.json(); // ✅ safe now
+    const data = new FormData();
+    data.append("title", formData.title);
+    data.append("price", formData.price);
+    data.append("category", formData.category);
+    if (formData.image) data.append("image", formData.image);
 
     if (editId) {
-      setProducts(prev =>
-        prev.map(p => (p._id === editId ? result : p))
-      );
+      dispatch(updateProduct({ id: editId, formData: data }));
     } else {
-      setProducts(prev => [...prev, result]);
+      dispatch(addProduct(data));
     }
 
     resetForm();
-  } catch (err) {
-    console.error("Network error:", err);
-    alert("Server error");
-  }
-};
-
-  /* =======================
-     DELETE PRODUCT
-  ======================== */
-  const deleteProduct = async (id) => {
-    if (!window.confirm("Delete this product?")) return;
-
-    try {
-      await fetch(`http://localhost:5000/api/products/${id}`, {
-        method: "DELETE",
-      });
-
-      setProducts(prev => prev.filter(p => p._id !== id));
-    } catch (err) {
-      console.error(err);
-    }
   };
 
-  /* =======================
-     HELPERS
-  ======================== */
   const resetForm = () => {
     setFormData({ title: "", price: "", category: "", image: null });
     setEditId(null);
@@ -125,121 +80,127 @@ const AdminProducts = () => {
       title: product.title,
       price: product.price,
       category: product.category,
-      image: null
+      image: null,
     });
     setShowForm(true);
   };
 
+  const getImageUrl = (image) => {
+  if (!image) return null;
+
+  // already full URL (old products, CDN, etc.)
+  if (image.startsWith("http")) {
+    return image;
+  }
+
+  // backend uploaded image
+  return `http://localhost:5000${image}`;
+};
+
   return (
-    <>
-      {/* <Navbar showSearchBar={false} /> */}
+    <div className="admin-page">
+      <h2>Manage Products</h2>
 
-      <div className="admin-page">
-        <h2>Manage Products</h2>
+      <button className="admin-add-btn" onClick={() => setShowForm(true)}>
+        + Add Product
+      </button>
 
-        <button className="admin-add-btn" onClick={() => setShowForm(true)}>
-          + Add Product
-        </button>
+      {showForm && (
+        <div className="admin-form">
+          <input
+            type="text"
+            name="title"
+            placeholder="Product Title"
+            value={formData.title}
+            onChange={handleChange}
+          />
 
-        {/* =======================
-            FORM
-        ======================== */}
-        {showForm && (
-          <div className="admin-form">
-            <input
-              type="text"
-              name="title"
-              placeholder="Product Title"
-              value={formData.title}
-              onChange={handleChange}
-            />
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            value={formData.price}
+            onChange={handleChange}
+          />
 
-            <input
-              type="number"
-              name="price"
-              placeholder="Price"
-              value={formData.price}
-              onChange={handleChange}
-            />
+          <input
+            type="text"
+            name="category"
+            placeholder="Category"
+            value={formData.category}
+            onChange={handleChange}
+          />
 
-            <input
-              type="text"
-              name="category"
-              placeholder="Category"
-              value={formData.category}
-              onChange={handleChange}
-            />
+          <input type="file" accept="image/*" onChange={handleImageChange} />
 
-            <input type="file" accept="image/*" onChange={handleImageChange} />
-
-            <div className="form-actions">
-              <button onClick={submitProduct}>
-                {editId ? "Update" : "Save"}
-              </button>
-              <button className="danger" onClick={resetForm}>
-                Cancel
-              </button>
-            </div>
+          <div className="form-actions">
+            <button onClick={submitProduct}>
+              {editId ? "Update" : "Save"}
+            </button>
+            <button className="danger" onClick={resetForm}>
+              Cancel
+            </button>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* =======================
-            TABLE
-        ======================== */}
-        <table className="admin-table">
-          <thead>
+      <table className="admin-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {loading ? (
             <tr>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Actions</th>
+              <td colSpan="5">Loading...</td>
             </tr>
-          </thead>
+          ) : products.length === 0 ? (
+            <tr>
+              <td colSpan="5">No products found</td>
+            </tr>
+          ) : (
+            products.map((p) => (
+              <tr key={p._id}>
+                <td>
+                  {p.image ? (
+                    <img
+                      src={getImageUrl(p.image)}
+                      alt={p.title}
+                      width="50"
+                      height="50"
+                      style={{ objectFit: "cover" }}
+                    />
+                  ) : (
+                    <span style={{ fontSize: "12px", color: "#94a3b8" }}>
+                      No image
+                    </span>
+                  )}
+                </td>
 
-          <tbody>
-            {products.length === 0 ? (
-              <tr>
-                <td colSpan="5">No products found</td>
+                <td>{p.title}</td>
+                <td>{p.category}</td>
+                <td>₹ {p.price}</td>
+                <td>
+                  <button onClick={() => handleEdit(p)}>Edit</button>
+                  <button
+                    className="danger"
+                    onClick={() => dispatch(deleteProduct(p._id))}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
-            ) : (
-              products.map(p => (
-                <tr key={p._id}>
-                    <td>
-                        {p.image ? (
-                            <img
-                            src={p.image}
-                            alt={p.title}
-                            width="50"
-                            height="50"
-                            style={{ objectFit: "cover" }}
-                            />
-                        ) : (
-                            <span style={{ color: "#94a3b8", fontSize: "12px" }}>
-                                No image
-                            </span>
-                        )}
-                    </td>
-
-                  <td>{p.title}</td>
-                  <td>{p.category}</td>
-                  <td>₹ {p.price}</td>
-                  <td>
-                    <button onClick={() => handleEdit(p)}>Edit</button>
-                    <button
-                      className="danger"
-                      onClick={() => deleteProduct(p._id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-    </>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

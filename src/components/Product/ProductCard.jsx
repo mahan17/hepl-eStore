@@ -43,7 +43,14 @@ const ProductCard = ({ product, onAdd, isInCart }) => {
   return (
     <div className="product-card-ui">
       <div className="product-image-box">
-        <img src={product.image} alt={product.title} />
+        <img
+          src={
+            product.image?.startsWith("http")
+              ? product.image
+              : `http://localhost:5000${product.image}`
+          }
+          alt={product.title}
+        />
       </div>
 
       <div className="product-info">

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../store/productSlice';
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 
 import Navbar from '../Navbar/Navbar';
 import Products from '../Product/Products';
@@ -28,25 +28,27 @@ const Home = () => {
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
 
-  if (user?.role === "admin") {
-    return <Navigate to="/admin" replace />;
-  }
 
+return (
+  <>
+    {!isAdminRoute && (
+      <Navbar
+        showHomeIcon={false}
+        showSearchBar={true}
+        activePage="home"
+      />
+    )}
 
-  return (
-    <>
-      {!isAdminRoute &&
-        <Navbar
-          showHomeIcon={false}
-          showSearchBar={true}
-          activePage="home"
-        />}
-      <CategoryBar />
-      <LandingPage></LandingPage>
+    <CategoryBar />
+
+    <div className="home-content">
+      <LandingPage />
       <Products />
-      <Footer/>
-    </>
-  );
+      <Footer />
+    </div>
+  </>
+);
+
 };
 
 export default Home;

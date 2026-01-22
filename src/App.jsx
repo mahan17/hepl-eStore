@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 // Components
 import ProtectedRoute from "./components/HomePage/ProtectedRoute";
 import Login from './components/login-page/login';
@@ -10,20 +11,28 @@ import Cart from './components/Cart/Cart';
 import Payment from './components/Cart/Payment';
 import CartWatcher from "./components/Cart/CartWatcher";
 import Profile from './components/Cart/Profile';
-// Dashboard
+import Orders from './components/Orders/Orders';
+
+// Admin
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import AdminUsers from "./components/Admin/AdminUsers";
 import AdminOrders from "./components/Admin/AdminOrders";
 import AdminProducts from "./components/Admin/AdminProducts";
-// Store
-import { fetchCartData } from './components/store/cart-actions';
+import AdminLayout from './components/Admin/AdminLayout';
 import AdminRoute from './components/Admin/AdminRoute';
+
+// Store
+import { loginActions } from './components/store/uiLogin';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCartData());
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      dispatch(loginActions.restoreLogin({ username: user.username }));
+    }
   }, [dispatch]);
 
   return (
@@ -31,56 +40,39 @@ function App() {
       <CartWatcher />
 
       <Routes>
+
+        {/* ADMIN */}
         <Route
           path="/admin"
           element={
             <AdminRoute>
-              <AdminDashboard />
+              <AdminLayout />
             </AdminRoute>
           }
-        />
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          
+        </Route>
 
-        <Route
-          path="/admin/users"
-          element={
-            <AdminRoute>
-              <AdminUsers />
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/products"
-          element={
-            <AdminRoute>
-              <AdminProducts />
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/orders"
-          element={
-            <AdminRoute>
-              <AdminOrders />
-            </AdminRoute>
-          }
-        />
-
-        {/* Public */}
-        <Route path="/" element={<Login />} />
+        {/* PUBLIC */}
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Navigate to="/" replace />} />
 
-        {/* Protected */}
-        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        {/* PROTECTED */}
         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+
       </Routes>
     </Router>
   );
 }
-
 
 export default App;

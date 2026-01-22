@@ -1,48 +1,87 @@
+:root {
+  --navbar-height: 70px;
+  --category-bar-height: 56px;
+}
 
-/*! CATEGORY BAR (FLOATING) */
+/* ===============================
+   CATEGORY BAR (FLOATING)
+================================ */
 .category-bar {
-  display: flex;
-  justify-content: center;   /* 👈 CENTER */
-  align-items: center;
-  width: 100%;
-  /* margin-bottom: 200px; */
-
-  gap: 12px;
-  padding: 10px 20px;
-
   position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+
+  width: 100%;
+  height: var(--category-bar-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  padding: 8px 20px;
+
   z-index: 1000;
 
-  white-space: nowrap;
-  scrollbar-width: none;
-  background: rgba(255, 255, 255, 0.15); /* semi-transparent white */
-  backdrop-filter: blur(10px);           /* frosted glass blur */
-  border-radius: 12px;
-}  
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
-/* CATEGORY PILL */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+/* ===============================
+   CATEGORY BUTTON (PILL)
+================================ */
 .category-pill {
-  background: rgba(255, 255, 255, 0.3); /* slightly transparent pill */
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+
   color: #0f172a;
   padding: 6px 14px;
   border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
   cursor: pointer;
-  font-size: 13px;
   transition: all 0.25s ease;
 
-  font-family: "ValentineCoolday", cursive;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  white-space: nowrap;
 }
 
 /* HOVER */
 .category-pill:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.55);
+  transform: translateY(-1px);
 }
 
-/* ACTIVE CATEGORY */
+/* ACTIVE */
 .category-pill.active {
   background: #0f172a;
-  color: white;
+  color: #ffffff;
   border-color: #0f172a;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ===============================
+   MOBILE SUPPORT
+================================ */
+@media (max-width: 768px) {
+  .category-bar {
+    justify-content: center;
+    overflow-x: auto;
+
+    padding: 8px 14px;
+    gap: 10px;
+
+    scrollbar-width: none;
+  }
+
+  .category-bar::-webkit-scrollbar {
+    display: none;
+  }
 }

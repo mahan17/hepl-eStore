@@ -3,7 +3,8 @@
   color: #e5e7eb;
   padding: 40px 20px 20px;
   margin-top: 60px;
-  /* width: 100%; */
+  width: 100%;
+  /* height: 70vh; */
 }
 
 .footer-container {
@@ -13,6 +14,7 @@
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 30px;
   margin-left: 50px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .footer-section h3 {

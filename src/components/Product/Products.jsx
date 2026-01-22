@@ -1,6 +1,7 @@
 import { fetchProducts } from '../store/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { cartActions } from '../store/cartSlice';
+import { saveUserCart } from "../store/cartSlice";
+
 import { useEffect } from 'react';
 import ProductCard from './ProductCard';
 
@@ -11,6 +12,7 @@ const Products = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cart.items);
   const searchQuery = useSelector(state => state.search.query);
+  const username = useSelector(state => state.login.username);
 
   const { items, selectedCategory, status } = useSelector(
     (state) => state.products
@@ -49,7 +51,7 @@ const Products = () => {
 
       {filteredProducts.map((product) => {
         const isInCart = cartItems.some(
-          item => item._id === product._id
+          item => item.productId === product._id
         );
 
         return (
@@ -57,10 +59,34 @@ const Products = () => {
             key={product._id}
             product={product}
             isInCart={isInCart}
-            onAdd={(item) => dispatch(cartActions.addToCart(item))}
-          />
-        );
-      })}
+            onAdd={(product) => {
+              if (!username) {
+                alert("Please login to add items to cart");
+                return;
+              }
+
+              const updatedItems = [
+                ...cartItems,
+                {
+                  productId: product._id,
+                  title: product.title,
+                  price: product.price,
+                  image: product.image,
+                  quantity: 1,
+                },
+              ];
+
+              dispatch(
+                saveUserCart({
+                  username,
+                  items: updatedItems,
+                })
+              );
+            }}
+
+                  />
+                );
+              })}
     </div>
   </section>
   );

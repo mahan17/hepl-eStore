@@ -4,12 +4,17 @@ const cartSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
+    index: true, // ❗ NOT unique globally
   },
-  items: {
-    type: Array,
-    default: [],
-  },
+  items: [
+    {
+      productId: String,
+      title: String,
+      price: Number,
+      image: String,
+      quantity: Number,
+    },
+  ],
   totalQuantity: {
     type: Number,
     default: 0,

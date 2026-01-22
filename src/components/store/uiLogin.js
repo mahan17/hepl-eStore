@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   username: '',
-  password: '',
   isLoggedIn: false,
 
   // UI states
@@ -21,7 +20,7 @@ const uiSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    // ✅ Login validation
+    /* 🔹 VALIDATION ONLY */
     validateForm(state, action) {
       const { username, password } = action.payload;
 
@@ -39,19 +38,18 @@ const uiSlice = createSlice({
       } else if (password.length < 6) {
         state.errors.password = 'Password must be at least 6 characters';
       }
-
-      if (!state.errors.username && !state.errors.password) {
-        state.isLoggedIn = true;
-        state.username = username;
-        state.password = password;
-      }
     },
 
-    // ✅ Logout
+    /* ✅ LOGIN SUCCESS (CALLED AFTER BACKEND LOGIN) */
+    loginSuccess(state, action) {
+      state.isLoggedIn = true;
+      state.username = action.payload.username;
+    },
+
+    /* ✅ LOGOUT */
     logout(state) {
       state.isLoggedIn = false;
       state.username = '';
-      state.password = '';
       state.errors = {
         username: '',
         password: '',
@@ -59,7 +57,7 @@ const uiSlice = createSlice({
       };
     },
 
-    // 👁 Password visibility
+    // 👁 UI toggles
     togglePassword(state) {
       state.showPassword = !state.showPassword;
     },
@@ -68,10 +66,15 @@ const uiSlice = createSlice({
       state.showConfirmPassword = !state.showConfirmPassword;
     },
 
-    // ✅ Generic error setter (useful for Register)
     setErrors(state, action) {
       state.errors = action.payload;
     },
+    
+    restoreLogin(state, action) {
+      state.isLoggedIn = true;
+      state.username = action.payload.username;
+    }
+
   },
 });
 

@@ -1,51 +1,93 @@
+:root {
+  --navbar-height: 70px;
+  --max-width: 1100px;
+}
+
+/* ===============================
+   PAYMENT PAGE BASE
+================================ */
+.payment-container {
+  padding-top: var(--navbar-height);
+  padding-bottom: 60px;
+}
+
+.payment-container h2 {
+  max-width: var(--max-width);
+  margin: 30px auto 20px;
+  padding: 0 20px;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* ===============================
+   PRODUCTS LIST
+================================ */
 .payment-products {
+  max-width: var(--max-width);
+  margin: 0 auto 24px;
+  padding: 0 20px;
+
   display: flex;
   flex-direction: column;
   gap: 14px;
-  margin-bottom: 24px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.payment-container h2{
-  margin-left: 60px;
 }
 
 .payment-product {
   display: flex;
-  align-items: center;
   gap: 16px;
   padding: 14px;
   border-radius: 12px;
   background: #f9fafb;
-  margin-left: 140px;
-  margin-right: 140px;
+  align-items: center;
 }
 
+/* IMAGE */
 .payment-product img {
   width: 70px;
   height: 70px;
   object-fit: contain;
 }
 
+/* INFO */
 .product-info {
   flex: 1;
 }
 
+.product-info h4 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.product-info p {
+  font-size: 14px;
+  color: #4b5563;
+}
+
+/* TOTAL */
 .product-total {
   font-weight: 600;
   color: #22c55e;
+  white-space: nowrap;
 }
 
+/* ===============================
+   PAYMENT CARD
+================================ */
+.payment-card {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ROWS */
 .row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 12px 0;
   font-size: 15px;
   color: #374151;
-  margin-left: 170px;
-  margin-right: 170px;
 }
 
 .row.total {
@@ -57,16 +99,19 @@
 }
 
 .row.total span:last-child {
-  color: #16a34a; /* green highlight */
+  color: #16a34a;
 }
 
+/* ===============================
+   ACTION BUTTONS
+================================ */
 .payment-actions {
   display: flex;
-  justify-content: space-between;
   gap: 16px;
-  margin: 24px 170px 20px 170px;
+  margin-top: 24px;
 }
 
+/* BACK */
 .back-cart-btn {
   flex: 1;
   padding: 12px 0;
@@ -83,6 +128,7 @@
   background: #f3f4f6;
 }
 
+/* PAY */
 .pay-now-btn {
   flex: 1;
   padding: 12px 0;
@@ -98,4 +144,41 @@
 .pay-now-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 14px rgba(22, 163, 74, 0.35);
+}
+
+/* ===============================
+   EMPTY STATE
+================================ */
+.payment-empty {
+  text-align: center;
+  margin-top: 120px;
+  font-size: 22px;
+  color: #64748b;
+}
+footer {
+  width: 100vw;
+  max-width: 100%;
+  margin: 0;
+  padding: 40px 24px;
+  background: #0f172a; /* or your footer bg */
+  color: #ffffff;
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .payment-product {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .product-total {
+    margin-top: 6px;
+  }
+
+  .payment-actions {
+    flex-direction: column;
+  }
 }

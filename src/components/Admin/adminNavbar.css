@@ -1,0 +1,109 @@
+/* =========================
+   ADMIN NAV ACTIONS
+========================= */
+.header {
+  position: fixed;       /* 🔥 KEY FIX */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.admin-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Dashboard icon button */
+.dashboard-btn {
+  border-radius: 50%;
+  border: none;
+  background: #e0f2fe;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25);
+}
+
+/* Hover */
+.dashboard-btn:hover {
+  background: #bae6fd;
+  transform: translateY(-1px) scale(1.05);
+}
+
+/* Active */
+.dashboard-btn:active {
+  transform: scale(0.95);
+}
+
+
+/*? admin NAvbar */
+.admin-right {
+  margin-left: 240px;
+  width: calc(100% - 240px);
+  min-height: 100vh;
+}
+
+.admin-navbar {
+  height: 64px;
+  /* background: #ffffff; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  backdrop-filter: blur(5px);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  
+}
+.admin-navbar h1{
+  color: #09a0e7;
+  font-size: 1.4rem;
+}
+
+/* !admin Navbar ends */
+/* =========================
+   LOGOUT BUTTON
+========================= */
+.admin-navbar button {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 999px; /* pill shape */
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+  width: 100px;
+}
+
+/* Hover */
+.admin-navbar button:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 10px 24px rgba(239, 68, 68, 0.45);
+  background: linear-gradient(135deg, #26cddc, #b91c1c);
+}
+
+/* Active (click) */
+.admin-navbar button:active {
+  transform: scale(0.96);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Focus (accessibility) */
+.admin-navbar button:focus-visible {
+  outline: 2px solid #fca5a5;
+  outline-offset: 2px;
+}

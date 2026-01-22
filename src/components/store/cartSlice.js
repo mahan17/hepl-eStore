@@ -1,87 +1,80 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+/* 🔹 FETCH USER CART */
+export const fetchUserCart = createAsyncThunk(
+  "cart/fetchUserCart",
+  async (username) => {
+    console.log("Fetching cart for: ", username);
+    const res = await fetch(
+      `http://localhost:5000/api/cart/${encodeURIComponent(username)}`
+    );
+    return await res.json();
+  }
+);
+
+/* 🔹 SAVE USER CART */
+export const saveUserCart = createAsyncThunk(
+  "cart/saveUserCart",
+  async ({ username, items }) => {
+    const res = await fetch(
+      `http://localhost:5000/api/cart/${encodeURIComponent(username)}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      }
+    );
+    return await res.json();
+  }
+);
+
+// !Updating cart and removing
+export const updateCartItem = createAsyncThunk(
+  "cart/updateCartItem",
+  async ({ username, productId, type }) => {
+    const res = await fetch(
+      `http://localhost:5000/api/cart/${encodeURIComponent(username)}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, type }),
+      }
+    );
+    return await res.json();
+  }
+);
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState: {
     items: [],
     totalQuantity: 0,
-    isInitialized: false,
   },
   reducers: {
-    replaceCart(state, action) {
-      state.items = action.payload.items || [];
-      state.totalQuantity = action.payload.totalQuantity || 0;
-      state.isInitialized = true;
-    },
-
-    addToCart(state, action) {
-      const newItem = action.payload;
-
-      const existingItem = state.items.find(
-        item => item._id === newItem._id
-      );
-
-      state.totalQuantity++;
-
-      if (!existingItem) {
-        state.items.push({
-          _id: newItem._id,
-          title: newItem.title,
-          price: newItem.price,
-          image: newItem.image,
-          category: newItem.category,
-          quantity: 1,
-          totalPrice: newItem.price,
-        });
-      } else {
-        existingItem.quantity++;
-        existingItem.totalPrice += newItem.price;
-      }
-    },
-
-    removeFromCart(state, action) {
-      const id = action.payload;
-
-      const existingItem = state.items.find(
-        item => item._id === id
-      );
-
-      if (!existingItem) return;
-
-      state.totalQuantity--;
-
-      if (existingItem.quantity === 1) {
-        state.items = state.items.filter(
-          item => item._id !== id
-        );
-      } else {
-        existingItem.quantity--;
-        existingItem.totalPrice -= existingItem.price;
-      }
-    },
-    
-    removeItemCompletely(state, action) {
-      const id = action.payload;
-
-      const existingItem = state.items.find(
-        item => item._id === id
-      );
-
-      if (!existingItem) return;
-
-      state.totalQuantity -= existingItem.quantity;
-
-      state.items = state.items.filter(
-        item => item._id !== id
-      );
-    },
-
     clearCart(state) {
       state.items = [];
       state.totalQuantity = 0;
-    }
-
+    },
+    setCart(state, action) {
+      state.items = action.payload.items;
+      state.totalQuantity = action.payload.totalQuantity;
+    },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserCart.fulfilled, (state, action) => {
+        state.items = action.payload.items || [];
+        state.totalQuantity = action.payload.totalQuantity || 0;
+      })
+      .addCase(saveUserCart.fulfilled, (state, action) => {
+        state.items = action.payload.items || [];
+        state.totalQuantity = action.payload.totalQuantity || 0;
+      })
+      .addCase(updateCartItem.fulfilled, (state, action) => {
+        state.items = action.payload.items || [];
+        state.totalQuantity = action.payload.totalQuantity || 0;
+      });
+  }
 });
 
 export const cartActions = cartSlice.actions;

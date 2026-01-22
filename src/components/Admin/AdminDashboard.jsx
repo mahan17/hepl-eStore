@@ -1,32 +1,34 @@
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
 import "./admin.css";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <>
-      {/* <Navbar showSearchBar={false} /> */}
+    <div className="admin-layout">
+      {/* Sidebar */}
+      <aside className="admin-sidebar">
+        <h2 className="sidebar-title">Admin</h2>
 
-      <div className="admin-page">
-        <h1>Admin Dashboard</h1>
-
-        <div className="admin-grid">
-          <div onClick={() => navigate("/admin/users")}>
+        <ul className="sidebar-menu">
+          <li onClick={() => navigate("/admin/users")}>
             👤 Users
-          </div>
-
-          <div onClick={() => navigate("/admin/products")}>
+          </li>
+          <li onClick={() => navigate("/admin/products")}>
             📦 Products
-          </div>
-
-          <div onClick={() => navigate("/admin/orders")}>
+          </li>
+          <li onClick={() => navigate("/admin/orders")}>
             🧾 Orders
-          </div>
-        </div>
-      </div>
-    </>
+          </li>
+        </ul>
+      </aside>
+
+      {/* Main Content */}
+      <main className="admin-content">
+        <h1>Admin Dashboard</h1>
+        <p>Select an option from the sidebar</p>
+      </main>
+    </div>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addressActions } from "../store/addressSlice";
+import { fetchUserCart } from "../store/cartSlice";
 import { loginActions } from '../store/uiLogin';
 import { useNavigate } from 'react-router-dom';
 import ForgotPassword from './ForgetPassword';
@@ -17,59 +18,67 @@ const Login = () => {
   const navigate = useNavigate(); // ✅ hook to navigate
 
   const submitHandler = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  dispatch(
-    loginActions.validateForm({
-      username,
-      password,
-    })
-  );
+    dispatch(
+      loginActions.validateForm({
+        username,
+        password,
+      })
+    );
 
-  // basic frontend validation
-  if (
-    !username.includes('@') ||
-    !username.includes('.com') ||
-    password.length < 6
-  ) {
-    return;
-  }
-
-  try {
-    const response = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      alert(data.message);
+    // basic frontend validation
+    if (
+      !username.includes('@') ||
+      !username.includes('.com') ||
+      password.length < 6
+    ) {
       return;
     }
 
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message);
+        return;
+      }
       alert("Login Successful");
 
-
-    const addressRes = await fetch(
-        `http://localhost:5000/api/address?username=${username}`
+      // ✅ UPDATE REDUX LOGIN STATE
+      dispatch(
+        loginActions.loginSuccess({
+          username: username,
+        })
       );
-      const addressData = await addressRes.json();
 
-      if (addressData) {
-        dispatch(addressActions.loadAddress(addressData));
-      } else {
-        dispatch(addressActions.clearAddress());
-      }
+      // ✅ LOAD USER-SPECIFIC CART
+      dispatch(fetchUserCart(username));
 
-      // ✅ CREATE USER OBJECT (IMPORTANT)
-      const userData = {
-        username: username, // using email as unique username
-        email: username,
-        role: data.role,
+      const addressRes = await fetch(
+          `http://localhost:5000/api/address?username=${username}`
+        );
+        const addressData = await addressRes.json();
+
+        if (addressData) {
+          dispatch(addressActions.loadAddress(addressData));
+        } else {
+          dispatch(addressActions.clearAddress());
+        }
+
+        // ✅ CREATE USER OBJECT (IMPORTANT)
+        const userData = {
+          username: username, // using email as unique username
+          email: username,
+          role: data.role,
       };
 
       // ✅ SAVE LOGIN STATE
@@ -77,6 +86,7 @@ const Login = () => {
 
       // ✅ SAVE USER OBJECT
       localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("username", username);
 
       // ✅ LOAD ADDRESS INTO REDUX (CRITICAL)
       const savedAddress = JSON.parse(

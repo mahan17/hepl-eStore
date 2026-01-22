@@ -1,18 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendCartData } from "../store/cart-actions";
+import { fetchUserCart } from "../store/cartSlice";
 
 const CartWatcher = () => {
   const dispatch = useDispatch();
-  const cart = useSelector(state => state.cart);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const username = useSelector(state => state.login.username);
+  const isLoggedIn = useSelector(state => state.login.isLoggedIn);
 
   useEffect(() => {
-    if (!cart.isInitialized || !user) return;
-
-    // ✅ SAVE CART PER USER
-    dispatch(sendCartData(cart, user.username));
-  }, [cart, dispatch, user]);
+    if (isLoggedIn && username) {
+      dispatch(fetchUserCart(username));
+    }
+  }, [dispatch, isLoggedIn, username]);
 
   return null;
 };

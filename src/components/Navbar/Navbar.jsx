@@ -6,7 +6,7 @@ import { addressActions } from "../store/addressSlice";
 import { loginActions } from '../store/uiLogin';
 import { cartActions } from '../store/cartSlice'; 
 
-import { FaHome, FaShoppingCart, FaUserCircle } from 'react-icons/fa';
+import { FaHome, FaShoppingCart, FaUserCircle, FaBoxOpen } from 'react-icons/fa';
 
 import './navbar.css';
 import SearchBar from '../searchBar/SearchBar';
@@ -26,6 +26,8 @@ const Navbar = ({
 
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
+  
+  const isLoggedIn = !!user;   
   const isAdmin = user?.role === "admin";
 
   useEffect(() => {
@@ -65,61 +67,87 @@ const Navbar = ({
         {/* -------Right side--------- */}
         <div className="navbar-right">
 
+          {/* SEARCH BAR – visible for all users */}
           {showSearchBar && !isAdmin && <SearchBar />}
 
-          {!isAdmin && (
-            <>
-              {/* CART */}
-              <div
-                className={`cart-icon-wrapper ${activePage === 'cart' ? 'active' : ''}`}
-                onClick={() => navigate('/cart')}
-                title="Cart"
+          {/* ---------------- GUEST USER ---------------- */}
+          {!isLoggedIn && (
+            <div className="auth-buttons">
+              <button
+                className="nav-btn login"
+                onClick={() => navigate('/login')}
               >
-                <FaShoppingCart size={22} />
-                {cartQuantity > 0 && (
-                  <span className="cart-badge">{cartQuantity}</span>
-                )}
-              </div>
+                Login
+              </button>
 
-              {/* PROFILE */}
-              <div className="profile-wrapper" ref={profileRef}>
-                <div
-                  className="profile-icon"
-                  onClick={() => setShowProfileMenu(true)}
-                  title="Profile"
-                >
-                  <FaUserCircle size={26} />
-                </div>
+              <button
+                className="nav-btn register"
+                onClick={() => navigate('/register')}
+              >
+                Register
+              </button>
+            </div>
+          )}
 
-                {showProfileMenu && (
-                  <div className="profile-dropdown">
-                    <button
-                      onClick={() => {
-                        setShowProfileMenu(false);
-                        navigate('/profile');
-                      }}
-                    >
-                      My Profile
-                    </button>
+  {/* ---------------- LOGGED-IN USER ---------------- */}
+    {isLoggedIn && !isAdmin && (
+      <>
+        {/* ORDERS */}
+        <div
+          className={`orders-icon-wrapper ${activePage === 'orders' ? 'active' : ''}`}
+          onClick={() => navigate('/orders')}
+          title="My Orders"
+        >
+          {/* <FaBoxOpen size={26} /> */}
+          Orders
+        </div>
 
-                    <button
-                      className="logout"
-                      onClick={() => {
-                        localStorage.clear();
-                        dispatch(loginActions.logout());
-                        dispatch(addressActions.clearAddress());
-                        dispatch(cartActions.clearCart());
-                        navigate("/login", { replace: true });
-                      }}
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            </>
+        {/* CART */}
+        <div
+          className={`cart-icon-wrapper ${activePage === 'cart' ? 'active' : ''}`}
+          onClick={() => navigate('/cart')}
+          title="Cart"
+        >
+          <FaShoppingCart size={22} />
+          {cartQuantity > 0 && (
+            <span className="cart-badge">{cartQuantity}</span>
           )}
         </div>
+
+        {/* PROFILE */}
+        <div className="profile-wrapper" ref={profileRef}>
+          <div
+            className="profile-icon"
+            onClick={() => setShowProfileMenu(!showProfileMenu)}
+            title="Profile"
+          >
+            <FaUserCircle size={26} />
+          </div>
+
+          {showProfileMenu && (
+            <div className="profile-dropdown">
+              <button onClick={() => navigate('/profile')}>
+                My Profile
+              </button>
+
+              <button
+                className="logout"
+                onClick={() => {
+                  localStorage.clear();
+                  dispatch(loginActions.logout());
+                  dispatch(addressActions.clearAddress());
+                  dispatch(cartActions.clearCart());
+                  navigate("/", { replace: true });
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </>
+    )}
+    </div>
       </nav>
     </header>
   );

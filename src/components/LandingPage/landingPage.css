@@ -1,57 +1,128 @@
-:root{
-    --min-height: 70vh;
+:root {
+  --landing-min-height: clamp(70vh, 80vh, 90vh);
+  --navbar-height: 70px;
+  --category-bar-height: 56px;
 }
 
+/* ===============================
+   LANDING CONTAINER
+================================ */
 .landing {
-  min-height: var(--min-height);
+  /* min-height: var(--landing-min-height); */
+  /* margin-top: calc(var(--navbar-height) + var(--category-bar-height) + 20px); */
+  width: 100vw;
+  margin-top: 120px;
+  padding-bottom: 50px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
   border-radius: 40px;
   position: relative;
   overflow: hidden;
 }
 
-/* Dark overlay for readability */
+/* ===============================
+   OVERLAY (GLASS + COLOR)
+================================ */
 .landing-overlay {
-  background: rgba(142, 202, 197, 0.45);
-  min-height: var(--min-height);
-  width: 100%;
+  min-height: var(--landing-min-height);
+  /* width: 100%; */
   display: flex;
   align-items: center;
   padding: 80px 60px;
+    padding-bottom: 50px;
+
+  /* background: linear-gradient(
+     to right,
+    rgba(142, 202, 197, 0.55),
+    rgba(142, 202, 197, 0.35)
+  ); */
+
+  /* backdrop-filter: blur(2px); */
 }
 
+/* =============================
+   LEFT CONTENT
+  ============================== */
 .landing-left {
   width: 50%;
-  color: #fff;
+  backdrop-filter: blur(6px);
+  color: #11bfbf;
+  
 }
 
+/* TITLE */
 .landing-left h1 {
   font-size: 48px;
+  font-weight: 700;
   margin-bottom: 16px;
+  line-height: 1.2;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+/* DESCRIPTION (GLASS CARD) */
 .landing-left p {
   font-size: 18px;
   margin-bottom: 24px;
-  color: #ffffff;
-  /* background-color: white; */
-  border-radius: 20px;
-  padding: 10px;
-  backdrop-filter: blur(10px);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  /* color: #0f172a; */
+
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 16px;
+  padding: 14px 18px;
+
+  /* backdrop-filter: blur(12px); */
 }
 
+/* ===============================
+   CTA BUTTON
+================================ */
 .landing-btn {
   padding: 12px 28px;
   font-size: 16px;
+  font-weight: 600;
+
   border: none;
   border-radius: 8px;
   background-color: #4f46e5;
-  color: white;
+  color: #ffffff;
+
   cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .landing-btn:hover {
   background-color: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+}
+
+/* ===============================
+   RESPONSIVE (MOBILE)
+================================ */
+@media (max-width: 768px) {
+  .landing {
+    margin-top: calc(var(--navbar-height) + var(--category-bar-height) + 12px);
+    border-radius: 24px;
+  }
+
+  .landing-overlay {
+    padding: 60px 24px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .landing-left {
+    width: 100%;
+  }
+
+  .landing-left h1 {
+    font-size: 34px;
+  }
+
+  .landing-left p {
+    font-size: 16px;
+  }
 }

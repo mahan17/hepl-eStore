@@ -8,6 +8,48 @@ html {
   z-index: 2000;
 }
 
+/* AUTH BUTTON WRAPPER */
+.auth-buttons {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+/* COMMON BUTTON STYLE */
+.nav-btn {
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1.8px solid transparent;
+}
+
+/* LOGIN BUTTON – OUTLINED */
+.nav-btn.login {
+  background: transparent;
+  color: #2563eb;
+  border-color: #2563eb;
+}
+
+.nav-btn.login:hover {
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+/* REGISTER BUTTON – FILLED */
+.nav-btn.register {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #ffffff;
+  border: none;
+}
+
+.nav-btn.register:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
+}
 /*! NAVBAR */
 .navbar {
   display: flex;
@@ -47,8 +89,7 @@ html {
   font-weight: 200;
   background: linear-gradient(90deg, #fffefe, #ffffff);
   margin-left: 20px;
-
-  font-family: "StoriesThinking", cursive;
+ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .brand-text span {
@@ -102,15 +143,16 @@ html {
 /* DROPDOWN */
 .profile-dropdown {
   position: absolute;
+  z-index: 3000;
   right: 0;
-  top: 42px;
+  top: 100px;
   min-width: 100px;
-  padding: 10px;
+  padding: 20px;
   border-radius: 14px;
 
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  /* background: rgba(15, 23, 42, 0.75); */
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   z-index: 3000;
@@ -119,10 +161,10 @@ html {
 
 .profile-dropdown button {
   width: 100%;
-  padding: 10px 12px;
+  padding: 10px;
   border: none;
   background: transparent;
-  color: white;
+  color: rgb(0, 0, 0);
   font-size: 14px;
   text-align: left;
   border-radius: 8px;
@@ -192,6 +234,25 @@ html {
   padding: 2px 6px;
   border-radius: 999px;
 }
+
+/* !Orders */
+
+.orders-icon-wrapper {
+  cursor: pointer;
+  margin-left: 20px;
+  color: #333;
+  position: relative;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.orders-icon-wrapper:hover {
+  color: #ff6b00;
+}
+
+.orders-icon-wrapper.active {
+  color: #ff6b00;
+}
+
 
 /* ANIMATION */
 @keyframes fadeIn {

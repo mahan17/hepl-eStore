@@ -1,19 +1,22 @@
 import express from "express";
 import mongoose from "mongoose";
-import authRoutes from './routes/auth.js';
+import authRoutes from './middleware/auth.js';
 import cors from "cors";
+import path from "path";
 
 import productRoutes from "./routes/productRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import addressRoutes from "./routes/addressRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 
 const app = express();
 
 
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -28,6 +31,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/users", userRoutes);
 app.use("/uploads", express.static("uploads"));
 
 mongoose

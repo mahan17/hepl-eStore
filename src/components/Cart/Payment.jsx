@@ -9,6 +9,8 @@ import './payment.css';
 const Payment = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const username = useSelector(state => state.login.username);
+
   const [showPayment, setShowPayment] = useState(false);
 
   const cartItems = useSelector(state => state.cart.items);
@@ -21,7 +23,7 @@ const Payment = () => {
   const finalItems = totalItems ?? reduxTotalItems;
 
   if (!cartItems.length) {
-    return <h2 className="payment-empty">No payment data found</h2>;
+    return <h2 className="payment-empty">Processing...</h2>;
   }
 
   return (
@@ -34,7 +36,14 @@ const Payment = () => {
         <div className="payment-products">
           {cartItems.map(item => (
             <div className="payment-product" key={item._id}>
-              <img src={item.image} alt={item.title} />
+               <img
+                src={
+                  item.image?.startsWith("http")
+                    ? item.image
+                    : `http://localhost:5000${item.image}`
+                }
+                alt={item.title}
+              />
 
               <div className="product-info">
                 <h4>{item.title}</h4>
@@ -75,11 +84,12 @@ const Payment = () => {
             </button>
           </div>
         </div>
-        <Footer />
+       
       </section>
-
+ 
       {showPayment && (
         <DummyPaymentModal
+          username={username} 
           amount={finalAmount}
           onClose={() => setShowPayment(false)}
           onSuccess={() => {
@@ -88,6 +98,12 @@ const Payment = () => {
           }}
         />
       )}
+      <footer>
+        <div className="footer-inner">
+          <Footer/>
+        </div>
+      </footer>
+
     </>
   );
 };

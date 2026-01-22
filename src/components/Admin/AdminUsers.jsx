@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
-import "./admin.css";
+import "./adminUsers.css";
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/admin/users")
+    fetch("http://localhost:5000/api/users")
       .then(res => res.json())
       .then(data => setUsers(data))
       .catch(err => console.error(err));
@@ -14,24 +14,31 @@ const AdminUsers = () => {
 
   return (
     <>
-      <Navbar showSearchBar={false} />
+      <Navbar />
+      <div className="admin-users">
+        <h2>Users</h2>
 
-      <div className="admin-page">
-        <h2>All Users</h2>
-
-        <table className="admin-table">
+        <table className="users-table">
           <thead>
             <tr>
-              <th>Username</th>
+              <th>#</th>
+              <th>Email</th>
               <th>Role</th>
+              <th>Created At</th>
             </tr>
           </thead>
 
           <tbody>
-            {users.map(user => (
+            {users.map((user, index) => (
               <tr key={user._id}>
+                <td>{index + 1}</td>
                 <td>{user.username}</td>
-                <td>{user.role}</td>
+                <td>
+                  <span className={`role ${user.role}`}>
+                    {user.role}
+                  </span>
+                </td>
+                <td>{new Date(user.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>
