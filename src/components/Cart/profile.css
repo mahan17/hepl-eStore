@@ -1,14 +1,15 @@
 .profile-page {
   min-height: 100vh;
-  background: #f8fafc;
+  /* background: #f8fafc; */
   display: flex;
   justify-content: center;
   padding: 40px 16px;
+  margin-top: 60px;
 }
 
 .profile-card {
   background: white;
-  width: 380px;
+  width: 80vw;
   border-radius: 20px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.1);
   padding: 24px;
@@ -37,6 +38,7 @@
 
 .profile-header h2 {
   margin-top: 10px;
+  font-family: 'Trebuchet MS', sans-serif;
 }
 
 .profile-section {
@@ -44,8 +46,10 @@
 }
 
 .address-card {
-  background: #f1f5f9;
+  background: #b7d4f1;
   padding: 14px;
   border-radius: 12px;
   font-size: 14px;
+  font-family: 'Trebuchet MS', sans-serif;
+  color: rgb(34, 91, 140);
 }

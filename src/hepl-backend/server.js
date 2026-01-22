@@ -1,6 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import authRoutes from './middleware/auth.js';
+
 import cors from "cors";
 import path from "path";
 
@@ -10,7 +13,7 @@ import addressRoutes from "./routes/addressRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 const app = express();
 
@@ -25,6 +28,7 @@ app.use(
   })
 );
 
+app.use("/api/payment", paymentRoutes);
 app.use("/api/address", addressRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);

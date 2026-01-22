@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import DummyPaymentModal from './DummyPaymentModal';
+import RazorpayPayment from './RazorpayPayment';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../HomePage/Footer';
 import './payment.css';
@@ -10,8 +10,6 @@ const Payment = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const username = useSelector(state => state.login.username);
-
-  const [showPayment, setShowPayment] = useState(false);
 
   const cartItems = useSelector(state => state.cart.items);
   const reduxTotalAmount = useSelector(state => state.cart.totalAmount);
@@ -29,14 +27,13 @@ const Payment = () => {
   return (
     <>
       <section className="payment-container">
-        <Navbar showHomeIcon={true}
-                showSearchBar={false}/>
+        <Navbar showHomeIcon={true} showSearchBar={false} />
         <h2>Payment Summary</h2>
 
         <div className="payment-products">
           {cartItems.map(item => (
             <div className="payment-product" key={item._id}>
-               <img
+              <img
                 src={
                   item.image?.startsWith("http")
                     ? item.image
@@ -57,6 +54,7 @@ const Payment = () => {
             </div>
           ))}
         </div>
+
         <div className="payment-card">
           <div className="row">
             <span>Total Items</span>
@@ -76,34 +74,23 @@ const Payment = () => {
               Back to Cart
             </button>
 
-            <button
-              className="pay-now-btn"
-              onClick={() => setShowPayment(true)}
-            >
-              Pay Now
-            </button>
+            <RazorpayPayment
+              amount={finalAmount}
+              username={username}
+              onSuccess={() => {
+                alert("Payment Successful 🎉");
+                navigate('/home');
+              }}
+            />
           </div>
         </div>
-       
       </section>
- 
-      {showPayment && (
-        <DummyPaymentModal
-          username={username} 
-          amount={finalAmount}
-          onClose={() => setShowPayment(false)}
-          onSuccess={() => {
-            alert("Payment Successful 🎉");
-            navigate('/home');
-          }}
-        />
-      )}
+
       <footer>
         <div className="footer-inner">
-          <Footer/>
+          <Footer />
         </div>
       </footer>
-
     </>
   );
 };

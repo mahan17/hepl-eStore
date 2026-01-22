@@ -8,7 +8,7 @@ import Login from './components/login-page/login';
 import Home from './components/HomePage/Home';
 import Register from './components/login-page/Register';
 import Cart from './components/Cart/Cart';
-import Payment from './components/Cart/Payment';
+import Payment from './components/Payments/Payment';
 import CartWatcher from "./components/Cart/CartWatcher";
 import Profile from './components/Cart/Profile';
 import Orders from './components/Orders/Orders';
