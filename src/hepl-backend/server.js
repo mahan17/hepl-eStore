@@ -14,9 +14,9 @@ import adminRoutes from "./routes/adminRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import adminDashboardRoutes from "./routes/adminDashboard.js";
 
 const app = express();
-
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
@@ -36,6 +36,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/admin", adminDashboardRoutes);
 app.use("/uploads", express.static("uploads"));
 
 mongoose

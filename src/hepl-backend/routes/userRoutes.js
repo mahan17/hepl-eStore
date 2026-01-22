@@ -1,5 +1,9 @@
 import express from "express";
 import User from "../models/User.js";
+import Cart from "../models/Cart.js";
+import Order from "../models/Order.js";
+import Address from "../models/Address.js";
+
 
 const router = express.Router();
 
@@ -13,10 +17,11 @@ router.get("/", async (req, res) => {
 });
 
 /* ==========================
-   DELETE USER (ADMIN ONLY)
+   DELETE USER + CART + ORDERS (ADMIN ONLY)
 ========================== */
 router.delete("/:id", async (req, res) => {
   try {
+    // 1️⃣ Find user
     const user = await User.findById(req.params.id);
 
     if (!user) {
@@ -28,12 +33,29 @@ router.delete("/:id", async (req, res) => {
       return res.status(403).json({ message: "Admin cannot be deleted" });
     }
 
+    const username = user.username;
+
+    // 2️⃣ Delete user's cart
+    await Cart.deleteOne({ username });
+
+    // 3️⃣ Delete user's orders
+    await Order.deleteMany({ username });
+
+    // 4️⃣ Delete user
     await User.findByIdAndDelete(req.params.id);
-    res.json({ message: "User removed successfully" });
+
+    // 5 Delete user's Address
+    await Address.deleteMany({ username });
+
+    res.json({
+      message: "User, cart, address and orders deleted successfully",
+    });
 
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Failed to delete user" });
   }
 });
+
 
 export default router;
