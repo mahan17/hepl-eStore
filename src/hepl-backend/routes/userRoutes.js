@@ -35,16 +35,16 @@ router.delete("/:id", async (req, res) => {
 
     const username = user.username;
 
-    // 2️⃣ Delete user's cart
+    // Delete user's cart
     await Cart.deleteOne({ username });
 
-    // 3️⃣ Delete user's orders
+    // Delete user's orders
     await Order.deleteMany({ username });
 
-    // 4️⃣ Delete user
+    // Delete user
     await User.findByIdAndDelete(req.params.id);
 
-    // 5 Delete user's Address
+    // Delete user's Address
     await Address.deleteMany({ username });
 
     res.json({

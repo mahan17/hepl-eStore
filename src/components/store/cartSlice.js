@@ -4,7 +4,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchUserCart = createAsyncThunk(
   "cart/fetchUserCart",
   async (username) => {
-    console.log("Fetching cart for: ", username);
     const res = await fetch(
       `http://localhost:5000/api/cart/${encodeURIComponent(username)}`
     );

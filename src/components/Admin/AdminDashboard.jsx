@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from "recharts";
 import "./admin.css";
-// import './sideBar.css';
-// import './adminStats.css'
+import './sideBar.css';
 
 // DATA FROM DB (API)
 import { useEffect, useState } from "react";
@@ -10,7 +9,6 @@ import { useEffect, useState } from "react";
 const COLORS = ["#2563eb", "#16a34a", "#f59e0b", "#dc2626"];
 
 const AdminDashboard = () => {
-  const navigate = useNavigate();
 
   const [usersData, setUsersData] = useState([]);
   const [ordersData, setOrdersData] = useState([]);
@@ -33,19 +31,8 @@ const AdminDashboard = () => {
     }
   };
   
-
   return (
     <div className="admin-layout">
-      {/* Sidebar */}
-      <aside className="admin-sidebar">
-        <h2 className="sidebar-title">Admin</h2>
-
-        <ul className="sidebar-menu">
-          <li onClick={() => navigate("/admin/users")}>👤 Users</li>
-          <li onClick={() => navigate("/admin/products")}>📦 Products</li>
-          <li onClick={() => navigate("/admin/orders")}>🧾 Orders</li>
-        </ul>
-      </aside>
 
       {/* Main Content */}
       <main className="admin-content">

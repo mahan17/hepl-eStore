@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { Fragment } from "react";
 import "./adminOrders.css";
-// import "./admin.css";
 
 const AdminOrders = () => {
   const [groupedOrders, setGroupedOrders] = useState({});
@@ -41,9 +41,9 @@ const AdminOrders = () => {
 
         <tbody>
           {Object.entries(groupedOrders).map(([username, orders]) => (
-            <>
+            <Fragment key={username}>
               {/* USER ROW */}
-              <tr key={username} className="user-row">
+              <tr className="user-row">
                 <td>{username}</td>
                 <td>{orders.length}</td>
                 <td>
@@ -92,7 +92,7 @@ const AdminOrders = () => {
                   </td>
                 </tr>
               )}
-            </>
+            </Fragment>
           ))}
         </tbody>
       </table>

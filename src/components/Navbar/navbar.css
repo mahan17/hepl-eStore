@@ -89,7 +89,7 @@ html {
   font-weight: 200;
   background: linear-gradient(90deg, #fffefe, #ffffff);
   margin-left: 20px;
- font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+ font-family: 'Trebuchet MS', sans-serif;
 }
 
 .brand-text span {

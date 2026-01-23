@@ -8,8 +8,6 @@
    LANDING CONTAINER
 ================================ */
 .landing {
-  /* min-height: var(--landing-min-height); */
-  /* margin-top: calc(var(--navbar-height) + var(--category-bar-height) + 20px); */
   width: 100vw;
   margin-top: 120px;
   padding-bottom: 50px;
@@ -32,14 +30,6 @@
   align-items: center;
   padding: 80px 60px;
     padding-bottom: 50px;
-
-  /* background: linear-gradient(
-     to right,
-    rgba(142, 202, 197, 0.55),
-    rgba(142, 202, 197, 0.35)
-  ); */
-
-  /* backdrop-filter: blur(2px); */
 }
 
 /* =============================
@@ -90,7 +80,7 @@
 
   cursor: pointer;
   transition: all 0.25s ease;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: 'Trebuchet MS', sans-serif;
 }
 
 .landing-btn:hover {
@@ -104,7 +94,6 @@
 ================================ */
 @media (max-width: 768px) {
   .landing {
-    margin-top: calc(var(--navbar-height) + var(--category-bar-height) + 12px);
     border-radius: 24px;
   }
 

@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../store/productSlice';
-import { useLocation, Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import Navbar from '../Navbar/Navbar';
 import Products from '../Product/Products';
 import Footer from './Footer';
 import CategoryBar from '../Navbar/CategoryBar';
 import LandingPage from '../LandingPage/LandingPage';
+import ScrollToTop from "./ScrollToTop";
 import '../Navbar/CategoryBar.css';
 
 const Home = () => {
@@ -44,6 +45,7 @@ return (
     <div className="home-content">
       <LandingPage />
       <Products />
+      <ScrollToTop />
       <Footer />
     </div>
   </>

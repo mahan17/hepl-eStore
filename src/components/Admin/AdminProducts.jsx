@@ -8,7 +8,8 @@ import {
   deleteProduct,
 } from "../store/adminProductSlice";
 
-import "./admin.css";
+import ScrollToTop from "../HomePage/ScrollToTop";
+import "./adminProducts.css";
 
 const AdminProducts = () => {
   const dispatch = useDispatch();
@@ -75,6 +76,7 @@ const AdminProducts = () => {
   };
 
   const handleEdit = (product) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setEditId(product._id);
     setFormData({
       title: product.title,
@@ -99,6 +101,7 @@ const AdminProducts = () => {
 
   return (
     <div className="admin-page">
+      <ScrollToTop></ScrollToTop>
       <h2>Manage Products</h2>
 
       <button className="admin-add-btn" onClick={() => setShowForm(true)}>

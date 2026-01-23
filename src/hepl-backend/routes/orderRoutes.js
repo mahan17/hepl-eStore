@@ -7,8 +7,6 @@ const router = express.Router();
 /* 🔴 ADMIN – GET ALL ORDERS (MUST BE FIRST) */
 router.get("/admin/all", async (req, res) => {
   try {
-    console.log("ADMIN ORDERS API HIT");
-
     const orders = await Order.find().sort({ createdAt: -1 });
     res.json(orders);
   } catch (err) {
