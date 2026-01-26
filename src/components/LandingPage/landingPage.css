@@ -1,117 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 :root {
-  --landing-min-height: clamp(70vh, 80vh, 90vh);
-  --navbar-height: 70px;
-  --category-bar-height: 56px;
+  /* CREAMY BROWN THEME PALETTE */
+  --primary-brown: #6d4c41;       
+  --dark-espresso: #3e2723;       
+  --cream-light: #fdf5e6;          
+  --cream-dim: #efebe9;            
+  --accent-tan: #bcaaa4;
+  
+  --glass-bg: rgba(255, 252, 245, 0.12); 
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --landing-height: clamp(600px, 85vh, 900px);
 }
 
 /* ===============================
    LANDING CONTAINER
 ================================ */
 .landing {
-  width: 100vw;
-  margin-top: 120px;
-  padding-bottom: 50px;
+  width: 100vw; 
+  margin: 120px auto 0px auto;
+  height: var(--landing-height);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
-  border-radius: 40px;
+  border-radius: 32px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 20px 40px rgba(62, 39, 35, 0.15);
+  font-family: 'Poppins', sans-serif;
 }
 
-/* ===============================
-   OVERLAY (GLASS + COLOR)
-================================ */
+/* THEMED OVERLAY - Essential for text readability */
+.landing::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(46, 33, 27, 0.75) 0%, 
+    rgba(46, 33, 27, 0.3) 100%
+  );
+  z-index: 1;
+}
+
 .landing-overlay {
-  min-height: var(--landing-min-height);
-  /* width: 100%; */
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
-  padding: 80px 60px;
-    padding-bottom: 50px;
+  padding: 0 80px;
 }
 
 /* =============================
-   LEFT CONTENT
-  ============================== */
+   GLASS CARD CONTENT
+ ============================== */
 .landing-left {
-  width: 50%;
-  backdrop-filter: blur(6px);
-  color: #11bfbf;
+  max-width: 550px;
+  padding: 45px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
   
+  /* Entrance Animation */
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-/* TITLE */
 .landing-left h1 {
-  font-size: 48px;
+  font-size: 3.8rem;
   font-weight: 700;
   margin-bottom: 16px;
-  line-height: 1.2;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  line-height: 1.1;
+  color: var(--cream-light);
+  text-shadow: 0 2px 15px rgba(0,0,0,0.2);
 }
 
-/* DESCRIPTION (GLASS CARD) */
 .landing-left p {
-  font-size: 18px;
-  margin-bottom: 24px;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  /* color: #0f172a; */
-
-  background: rgba(255, 255, 255, 0.78);
-  border-radius: 16px;
-  padding: 14px 18px;
-
-  /* backdrop-filter: blur(12px); */
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: var(--cream-dim);
+  font-weight: 300;
 }
 
 /* ===============================
-   CTA BUTTON
+   COUPON & FEATURES
 ================================ */
+.landing-promo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px dashed rgba(215, 204, 200, 0.4);
+  padding: 12px 18px;
+  border-radius: 14px;
+  margin-bottom: 28px;
+  width: fit-content;
+}
+
+.promo-badge {
+  background: var(--accent-tan);
+  color: var(--dark-espresso);
+  font-size: 0.7rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+}
+
+.promo-text {
+  color: var(--cream-light);
+  font-size: 0.95rem;
+}
+
+.code {
+  font-family: monospace;
+  color: #d7ccc8;
+  font-weight: bold;
+  background: rgba(0,0,0,0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
 .landing-btn {
-  padding: 12px 28px;
-  font-size: 16px;
+  padding: 18px 45px;
+  font-size: 1rem;
   font-weight: 600;
-
+  letter-spacing: 1px;
+  text-transform: uppercase;
   border: none;
-  border-radius: 8px;
-  background-color: #4f46e5;
-  color: #ffffff;
-
+  border-radius: 50px;
+  background: linear-gradient(135deg, #8d6e63, #5d4037);
+  color: #fff;
   cursor: pointer;
-  transition: all 0.25s ease;
-  font-family: 'Trebuchet MS', sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(62, 39, 35, 0.4);
 }
 
 .landing-btn:hover {
-  background-color: #4338ca;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, #a1887f, #6d4c41);
+  box-shadow: 0 10px 25px rgba(62, 39, 35, 0.5);
+}
+
+.landing-features {
+  margin-top: 40px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 25px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cream-dim);
+  font-size: 0.85rem;
+  font-weight: 400;
 }
 
 /* ===============================
-   RESPONSIVE (MOBILE)
+   RESPONSIVE & ANIMATION
 ================================ */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 768px) {
   .landing {
-    border-radius: 24px;
+    margin-top: 70px;
+    border-radius: 0;
+    width: 100vw;
+    height: auto;
+    min-height: 90vh;
   }
-
   .landing-overlay {
-    padding: 60px 24px;
+    padding: 100px 20px 40px 20px;
     justify-content: center;
-    text-align: center;
   }
-
   .landing-left {
-    width: 100%;
+    text-align: center;
+    padding: 30px 20px;
   }
-
-  .landing-left h1 {
-    font-size: 34px;
-  }
-
-  .landing-left p {
-    font-size: 16px;
-  }
+  .landing-left h1 { font-size: 2.6rem; }
+  .landing-promo { margin: 0 auto 28px auto; }
+  .landing-features { justify-content: center; flex-direction: column; gap: 10px; }
+  .landing-btn { width: 100%; }
 }

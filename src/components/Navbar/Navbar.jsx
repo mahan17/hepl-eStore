@@ -6,39 +6,52 @@ import { addressActions } from "../store/addressSlice";
 import { loginActions } from '../store/uiLogin';
 import { cartActions } from '../store/cartSlice'; 
 
-import { FaHome, FaShoppingCart, FaUserCircle, FaBoxOpen } from 'react-icons/fa';
+import { FaHome, FaShoppingCart, FaUserCircle, FaBoxOpen, FaBars, FaTimes, FaSearch } from 'react-icons/fa';
 
-import './navbar.css';
 import SearchBar from '../searchBar/SearchBar';
+import './navbar.css';
 
 const Navbar = ({
-  showHomeIcon = false,
-  showSearchBar = true,
-  activePage
-}) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    showHomeIcon = false,
+    showSearchBar = true,
+    activePage
+  }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  const cartQuantity = useSelector(state => state.cart.totalQuantity);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const profileRef = useRef(null);
+    const profileRef = useRef(null);
 
-  const storedUser = localStorage.getItem("user");
-  const user = storedUser ? JSON.parse(storedUser) : null;
-  
-  const isLoggedIn = !!user;   
-  const isAdmin = user?.role === "admin";
+    const cartQuantity = useSelector(state => state.cart.totalQuantity);
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (profileRef.current && !profileRef.current.contains(e.target)) {
-        setShowProfileMenu(false);
-      }
+    const storedUser = localStorage.getItem("user");
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    
+    const isLoggedIn = !!user;   
+    const isAdmin = user?.role === "admin";
+
+    const handleLogout = () => {
+      localStorage.clear();
+      dispatch(loginActions.logout());
+      dispatch(addressActions.clearAddress());
+      dispatch(cartActions.clearCart());
+      navigate("/", { replace: true });
+
+      setShowProfileMenu(false);
+      setShowMobileMenu(false);
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+
+    useEffect(() => {
+      const handleClickOutside = (e) => {
+        if (profileRef.current && !profileRef.current.contains(e.target)) {
+          setShowProfileMenu(false);
+        }
+      };
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
   return (
     <header className="header">
@@ -66,89 +79,112 @@ const Navbar = ({
         {/* ----------- */}
         {/* -------Right side--------- */}
         <div className="navbar-right">
+          {/* DESKTOP SEARCH */}
+          {showSearchBar && !isAdmin && (
+            <div className="search-wrapper">
+              <SearchBar />
+            </div>
+          )}
 
-          {/* SEARCH BAR – visible for all users */}
-          {showSearchBar && !isAdmin && <SearchBar />}
-
-          {/* ---------------- GUEST USER ---------------- */}
+          {/* DESKTOP – GUEST */}
           {!isLoggedIn && (
-            <div className="auth-buttons">
-              <button
-                className="nav-btn login"
-                onClick={() => navigate('/login')}
-              >
+            <div className="desktop-only auth-buttons">
+              <button className="nav-btn login" onClick={() => navigate("/login")}>
                 Login
               </button>
-
-              <button
-                className="nav-btn register"
-                onClick={() => navigate('/register')}
-              >
+              <button className="nav-btn register" onClick={() => navigate("/register")}>
                 Register
               </button>
             </div>
           )}
 
-  {/* ---------------- LOGGED-IN USER ---------------- */}
-    {isLoggedIn && !isAdmin && (
-      <>
-        {/* ORDERS */}
-        <div
-          className={`orders-icon-wrapper ${activePage === 'orders' ? 'active' : ''}`}
-          onClick={() => navigate('/orders')}
-          title="My Orders"
-        >
-          {/* <FaBoxOpen size={26} /> */}
-          Orders
-        </div>
-
-        {/* CART */}
-        <div
-          className={`cart-icon-wrapper ${activePage === 'cart' ? 'active' : ''}`}
-          onClick={() => navigate('/cart')}
-          title="Cart"
-        >
-          <FaShoppingCart size={22} />
-          {cartQuantity > 0 && (
-            <span className="cart-badge">{cartQuantity}</span>
-          )}
-        </div>
-
-        {/* PROFILE */}
-        <div className="profile-wrapper" ref={profileRef}>
-          <div
-            className="profile-icon"
-            onClick={() => setShowProfileMenu(!showProfileMenu)}
-            title="Profile"
-          >
-            <FaUserCircle size={26} />
-          </div>
-
-          {showProfileMenu && (
-            <div className="profile-dropdown">
-              <button onClick={() => navigate('/profile')}>
-                My Profile
-              </button>
-
-              <button
-                className="logout"
-                onClick={() => {
-                  localStorage.clear();
-                  dispatch(loginActions.logout());
-                  dispatch(addressActions.clearAddress());
-                  dispatch(cartActions.clearCart());
-                  navigate("/", { replace: true });
-                }}
+          {/* DESKTOP – LOGGED IN */}
+          {isLoggedIn && !isAdmin && (
+            <>
+              <div
+                className={`desktop-only orders-icon-wrapper ${activePage === "orders" ? "active" : ""}`}
+                onClick={() => navigate("/orders")}
               >
-                Logout
-              </button>
-            </div>
+                Orders
+              </div>
+
+              <div
+                className={`desktop-only cart-icon-wrapper ${activePage === "cart" ? "active" : ""}`}
+                onClick={() => navigate("/cart")}
+              >
+                <FaShoppingCart size={22} />
+                {cartQuantity > 0 && <span className="cart-badge">{cartQuantity}</span>}
+              </div>
+
+              <div className="desktop-only profile-wrapper" ref={profileRef}>
+                <div
+                  className="profile-icon"
+                  onClick={() => setShowProfileMenu(prev => !prev)}
+                >
+                  <FaUserCircle size={26} />
+                </div>
+
+                {showProfileMenu && (
+                  <div className="profile-dropdown">
+                    <button onClick={() => navigate("/profile")}>My Profile</button>
+                    <button className="logout" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
           )}
+
+          {/* ☰ MOBILE HAMBURGER */}
+          <div
+            className="mobile-only hamburger"
+            role="button"
+            tabIndex={0}
+            aria-label="Toggle menu"
+            onClick={() => {
+              setShowMobileMenu(prev => !prev);
+              setShowProfileMenu(false); // close profile if open
+            }}
+            onKeyDown={(e) => e.key === "Enter" && setShowMobileMenu(prev => !prev)}
+          >
+            {showMobileMenu ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </div>
         </div>
-      </>
-    )}
-    </div>
-      </nav>
+    </nav>
+
+        {showMobileMenu && (
+          <div className="mobile-menu">
+            {!isLoggedIn && (
+              <>
+                <button onClick={() => navigate("/login")}>Login</button>
+                <button onClick={() => navigate("/register")}>Register</button>
+              </>
+            )}
+
+            {isLoggedIn && !isAdmin && (
+              <>
+                <button onClick={() => navigate("/orders")}>Orders</button>
+                <button onClick={() => navigate("/cart")}>
+                  Cart ({cartQuantity})
+                </button>
+                <button onClick={() => navigate("/profile")}>My Profile</button>
+                <button
+                  className="logout"
+                  onClick={() => {
+                    localStorage.clear();
+                    dispatch(loginActions.logout());
+                    dispatch(addressActions.clearAddress());
+                    dispatch(cartActions.clearCart());
+                    navigate("/", { replace: true });
+                  }}
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </div>
+        )}
     </header>
   );
 };

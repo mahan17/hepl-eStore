@@ -9,9 +9,9 @@ body {
   /* font-family: 'Nunito'; */
   background: linear-gradient(
     135deg,
-    #a9d7da,
+    #eaba69,
     #ffffff,
-    #9ed5f7
+    #f7db9e
   );
 }
 
@@ -28,8 +28,8 @@ body {
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.35);
 
-  font-family: "Open Sans", sans-serif;
-  color: #111;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: #935b1a;
  
 }
 .login-container img{
@@ -44,7 +44,7 @@ body {
 .login-container h2 {
   text-align: center;
   margin-bottom: 50px;
-  color: #0bb8cb;
+  color: #f8c463;
   font-size: 3rem;
 }
 
@@ -76,7 +76,7 @@ body {
 /* Input focus */
 .login-container input:focus {
   outline: none;
-  border-color: #31abb7;
+  border-color: #f7cb6e;
   box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.25);
 }
 
@@ -93,8 +93,8 @@ body {
   border-radius: 10px;
   background: linear-gradient(
     90deg,
-    #6d94ae,
-    #158bfa
+    #f5d29a,
+    #f1cf79
   );
   color: #ffffff;
   font-size: 16px;
@@ -122,7 +122,7 @@ body {
 .forget-pass{
   cursor: pointer;
   text-align: center;
-  color: #158bfa;
+  color: #fa1515;
   padding: 0%;
   margin: 0%;
 }
@@ -138,7 +138,7 @@ body {
   padding-bottom: 0px;
 }
 #register-link{
-  color: #158bfa;
+  color: #e9c85d;
 }
 #register-link:hover{
   cursor:alias;
@@ -177,8 +177,8 @@ body {
   border-radius: 10px;
   background: linear-gradient(
     90deg,
-    #6d94ae,
-    #158bfa
+    #f3ca84,
+    #f6c467
   );
   color: #ffffff;
   font-size: 16px;

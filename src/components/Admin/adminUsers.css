@@ -1,6 +1,7 @@
 .admin-users {
   padding: 30px;
   width: 70vw;
+  font-family: 'Trebuchet MS', sans-serif;
 }
 
 .admin-users h2 {
@@ -63,19 +64,6 @@
 
 .delete-btn:hover {
   background: #d32f2f;
-}
-
-.admin-protected {
-  font-size: 13px;
-  color: #888;
-  font-style: italic;
-}
-.section-gap {
-  margin-top: 40px;
-}
-
-.admin-table {
-  border-left: 5px solid #c62828;
 }
 
 .action-cell {

@@ -1,55 +1,125 @@
+/* profile.css */
+
 .profile-page {
   min-height: 100vh;
-  /* background: #f8fafc; */
+  /* Matching the animated background from your products page */
+  background: linear-gradient(135deg, #fdfaf5, #f3e9dc, #fdfaf5);
+  background-size: 400% 400%;
+  animation: background-animate 15s ease infinite;
   display: flex;
   justify-content: center;
-  padding: 40px 16px;
-  margin-top: 60px;
+  padding: 100px 16px 40px; /* Space for Navbar */
+  width: 100vw;
+}
+
+/* Reusing your background animation logic */
+@keyframes background-animate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .profile-card {
-  background: white;
-  width: 80vw;
-  border-radius: 20px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
-  padding: 24px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  width: 100%;
+  max-width: 600px; /* More centered and elegant than 80vw */
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 40px rgba(94, 73, 46, 0.08);
+  padding: 40px;
+  height: fit-content;
 }
 
 .profile-header {
   text-align: center;
+  border-bottom: 1px dashed #d7ccc8;
+  padding-bottom: 30px;
 }
 
 .profile-img {
-  width: 110px;
-  height: 110px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #16a34a;
-  align-items: center;
+  border: 5px solid #6f4e37; /* Coffee Brown Border */
+  box-shadow: 0 8px 20px rgba(111, 78, 55, 0.2);
+  margin-bottom: 10px;
 }
 
 .upload-btn {
-  display: block;
-  margin-top: 8px;
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 16px;
+  background: #fdfaf5;
+  border: 1px solid #a68b6d;
+  border-radius: 20px;
   font-size: 13px;
-  color: #16a34a;
+  color: #6f4e37;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+  background: #6f4e37;
+  color: #fdfaf5;
 }
 
 .profile-header h2 {
-  margin-top: 10px;
+  margin-top: 20px;
   font-family: 'Trebuchet MS', sans-serif;
+  color: #4a3728; /* Espresso */
+  font-weight: 700;
+}
+
+.profile-header p {
+  color: #a68b6d; /* Latte */
+  font-size: 14px;
+  margin-top: 4px;
 }
 
 .profile-section {
-  margin-top: 24px;
+  margin-top: 35px;
+}
+
+.profile-section h3 {
+  color: #4a3728;
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-family: 'Trebuchet MS', sans-serif;
 }
 
 .address-card {
-  background: #b7d4f1;
-  padding: 14px;
-  border-radius: 12px;
-  font-size: 14px;
+  background: rgba(243, 233, 220, 0.5); /* Warm Latte wash */
+  padding: 24px;
+  border-radius: 16px;
+  font-size: 15px;
+  line-height: 1.6;
   font-family: 'Trebuchet MS', sans-serif;
-  color: rgb(34, 91, 140);
+  color: #4a3728;
+  border-left: 5px solid #6f4e37; /* Coffee accent */
+}
+
+.address-card p {
+  margin: 8px 0;
+}
+
+.address-card strong {
+  color: #6f4e37;
+  width: 100px;
+  display: inline-block;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 24px;
+  }
+  
+  .address-card strong {
+    display: block;
+    margin-bottom: 2px;
+  }
 }

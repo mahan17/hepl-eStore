@@ -1,90 +1,113 @@
+/* orders.css */
+
 /* PAGE LAYOUT */
 .orders-page {
-
-  width: 100vw;
-  height: 100vh;
-  margin: 80px  40px;
-  padding: 0 16px;
- 
-  display: block;
-  justify-content: center;
+  min-height: 100vh;
+  padding: 100px 40px 40px; /* Top padding ensures space for Navbar */
+  background: rgba(243, 233, 220, 0.5); /* Cream background */
+  font-family: 'Trebuchet MS', sans-serif;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  width: 100vw;
 }
 
 .orders-page h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  font-weight: 600;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #4a3728; /* Espresso */
+  border-bottom: 2px solid #e3d5ca;
+  padding-bottom: 10px;
 }
 
-/* ORDER CARD */
+/* ORDER CARD - Styled like a premium receipt */
 .order-card {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 18px;
-  margin-bottom: 18px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(215, 190, 160, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(94, 73, 46, 0.05);
+  transition: all 0.3s ease;
 }
 
 .order-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(94, 73, 46, 0.1);
+  background: rgba(255, 255, 255, 0.9);
 }
 
-/* ORDER HEADER */
+/* TEXT STYLING */
 .order-card p {
-  margin: 6px 0;
-  font-size: 14px;
+  margin: 8px 0;
+  font-size: 15px;
+  color: #6f4e37; /* Coffee Brown */
 }
 
 .order-card p b {
-  color: #333;
+  color: #4a3728; /* Espresso */
+  font-weight: 700;
 }
 
-/* PRICE HIGHLIGHTS */
+/* PRICE TAG */
 .order-card p:nth-child(2) {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.order-card p:nth-child(3) {
-  color: #1b8f3a;
-  font-weight: 600;
-}
-
-/* ITEMS LIST */
-.order-card > div {
+  font-size: 18px;
+  font-weight: 800;
+  color: #6f4e37;
+  display: inline-block;
+  background: #fdfaf5;
+  padding: 5px 12px;
+  border-radius: 8px;
   margin-top: 10px;
-  padding-left: 10px;
-  border-left: 3px solid #ff6b00;
 }
 
-.order-card > div > div {
-  margin: 4px 0;
+/* ITEMS LIST SECTION */
+.order-item-container {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(243, 233, 220, 0.3);
+  border-radius: 12px;
+  border-left: 4px solid #a68b6d; /* Latte accent */
+}
+
+.order-item-row {
+  margin: 6px 0;
   font-size: 14px;
-  color: #555;
+  color: #4a3728;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* EMPTY STATE */
 .orders-page-empty {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #fdfaf5;
+  color: #a68b6d;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 /* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
   .orders-page {
-    margin-top: 60px;
+    padding: 90px 20px 20px;
   }
 
   .order-card {
-    padding: 14px;
+    padding: 18px;
   }
 
   .orders-page h2 {
-    font-size: 20px;
+    font-size: 22px;
   }
 }

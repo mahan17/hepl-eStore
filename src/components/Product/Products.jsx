@@ -18,18 +18,6 @@ const Products = () => {
     (state) => state.products
   );
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
-
-  if (status === 'loading') {
-    return (
-      <section className="products-container">
-        <ProductSkeleton count={15} />
-      </section>
-    );
-  }
-
   let filteredProducts =
     selectedCategory === 'all'
       ? items
@@ -41,54 +29,99 @@ const Products = () => {
     );
   }
 
-  return (
-    <section className="products-container">
-    <div className="products-grid">
-      {filteredProducts.length === 0 && (
-        <p className="no-results">No products found</p>
-      )}
+  const groupedByCategory = filteredProducts.reduce((acc, product) => {
+    acc[product.category] = acc[product.category] || [];
+    acc[product.category].push(product);
+    return acc;
+  }, {});
 
-      {filteredProducts.map((product) => {
-        const isInCart = cartItems.some(
-          item => item.productId === product._id
-        );
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-        return (
-          <ProductCard
-            key={product._id}
-            product={product}
-            isInCart={isInCart}
-            onAdd={(product) => {
-              if (!username) {
-                alert("Please login to add items to cart");
-                return;
-              }
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
 
-              const updatedItems = [
-                ...cartItems,
-                {
-                  productId: product._id,
-                  title: product.title,
-                  price: product.price,
-                  image: product.image,
-                  quantity: 1,
-                },
-              ];
+    const titles = document.querySelectorAll(".category-title");
+    titles.forEach(el => observer.observe(el));
 
-              dispatch(
-                saveUserCart({
-                  username,
-                  items: updatedItems,
-                })
-              );
-            }}
+    return () => observer.disconnect();
+  }, [groupedByCategory]);
 
-                  />
-                );
-              })}
-    </div>
+  if (status === 'loading') {
+    return (
+      <section className="products-container">
+        <ProductSkeleton count={15} />
+      </section>
+    );
+  }
+  
+return (
+  <section className="products-container">
+    {/* Top Title */}
+    <h2 className="products-title">Products</h2>
+
+    {Object.keys(groupedByCategory).length === 0 && (
+      <p className="no-results">No products found</p>
+    )}
+
+    {Object.entries(groupedByCategory).map(([category, products]) => (
+      <div key={category} className="category-section">
+        {/* Category Title */}
+        <h3 className="category-title">{category}</h3>
+
+        <div className="products-grid">
+          {products.map((product) => {
+            const isInCart = cartItems.some(
+              item => item.productId === product._id
+            );
+
+            return (
+              <ProductCard
+                key={product._id}
+                product={product}
+                isInCart={isInCart}
+                onAdd={(product) => {
+                  if (!username) {
+                    alert("Please login to add items to cart");
+                    return;
+                  }
+
+                  const updatedItems = [
+                    ...cartItems,
+                    {
+                      productId: product._id,
+                      title: product.title,
+                      price: product.price,
+                      image: product.image,
+                      quantity: 1,
+                    },
+                  ];
+
+                  dispatch(
+                    saveUserCart({
+                      username,
+                      items: updatedItems,
+                    })
+                  );
+                }}
+              />
+            );
+          })}
+        </div>
+      </div>
+    ))}
   </section>
-  );
+);
 };
 
 export default Products;

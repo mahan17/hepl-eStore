@@ -150,6 +150,7 @@
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  margin-bottom: 40px;
 }
 
 .summary-row {
@@ -197,24 +198,25 @@
 /* BACK BUTTON */
 .back-btn {
   background: transparent;
-  border: 1px solid #0f172a;
-  color: #0f172a;
+  border: 1px solid #f0c557;
+  color: #000000;
 }
 
 .back-btn:hover {
-  background: #0f172a;
+  background: #d7a73f;
   color: #ffffff;
 }
 
 /* PAYMENT BUTTON */
 .payment-btn {
   border: none;
-  background: #16a34a;
+  background: #000000;
   color: #ffffff;
 }
 
 .payment-btn:hover {
-  background: #15803d;
+  background: #14c911;
+  color: rgb(255, 255, 255);
 }
 
 /* ===============================

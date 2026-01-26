@@ -37,11 +37,14 @@ const Orders = () => {
               <p><b>Order ID:</b> {order._id}</p>
               <p><b>Total:</b> ₹ {order.totalAmount}</p>
 
-              {order.items.map(item => (
-                <div key={item.productId}>
-                  {item.title} × {item.quantity}
-                </div>
-              ))}
+              <div className="order-item-container">
+                {order.items.map(item => (
+                  <div key={item.productId} className="order-item-row">
+                    <span>{item.title}</span>
+                    <b>× {item.quantity}</b>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>

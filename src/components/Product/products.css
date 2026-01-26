@@ -2,37 +2,57 @@
   padding-top: 50px;
   padding-left: 30px;
   padding-right: 30px;
-  margin: 20px;
+  padding-bottom: 80px;
+  margin: 0;
+  min-height: 100vh;
+
+  background: linear-gradient(135deg, #fdfaf5, #f3e9dc, #fdfaf5);
+  background-size: 400% 400%;
+  animation: background-animate 15s ease infinite;
+
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode';
 }
 
-/* GRID */
+@keyframes background-animate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ================= GRID ================= */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 50px;
 }
 
-/* CARD */
+/* ================= CARD ================= */
 .product-card {
-  background: rgba(255, 255, 255, 0.15); /* semi-transparent white */
-  backdrop-filter: blur(10px);  
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 16px;
+
   display: flex;
   flex-direction: column;
   height: 100%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
+
+  box-shadow: 0 10px 30px rgba(94, 73, 46, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(94, 73, 46, 0.15);
+  background: rgba(255, 255, 255, 0.6);
 }
 
-/* IMAGE */
+/* ================= IMAGE ================= */
 .product-image {
   height: 150px;
-  padding: 30px 0px 10px;
+  padding: 30px 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,59 +62,148 @@
   max-height: 120px;
   max-width: 100%;
   object-fit: contain;
+  animation: float 4s ease-in-out infinite;
 }
 
-/* CONTENT */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ================= CONTENT ================= */
 .product-content {
   flex-grow: 1;
-  padding: 0px 20px;
+  padding: 0 20px;
 }
 
+/* Product Title */
 .product-content h4 {
   font-size: 14px;
   font-weight: 600;
-  color: #111827;
+  color: #4a3728;
   line-height: 1.4;
-  overflow: hidden;
+
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+/* underline below product title */
+.product-content h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 32px;
+  height: 2px;
+  background: #6f4e37;
+  border-radius: 999px;
+  opacity: 0.6;
 }
 
 .product-content .category {
-  font-size: 12px;
-  color: #6b7280;
+  font-size: 11px;
+  color: #a68b6d;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .product-content .price {
   font-size: 16px;
-  font-weight: 600;
-  color: #111827;
+  font-weight: 700;
+  color: #6f4e37;
+  margin-top: 8px;
 }
 
-/* BUTTON */
+/* ================= BUTTON ================= */
 .add-to-cart-btn {
-  margin-bottom: 20px;
-  padding: 10px;
-  border-radius: 10px;
+  margin: 0 20px 20px;
+  padding: 12px;
+  border-radius: 12px;
   border: none;
-  background: #0f172a;
-  color: white;
-  font-size: 14px;
+
+  background: #6f4e37;
+  color: #fdfaf5;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease;
+
+  transition: all 0.2s ease;
 }
 
 .add-to-cart-btn:hover {
-  background: #d5daf1;
-  color: #111827;
+  background: #4a3728;
+  box-shadow: 0 4px 12px rgba(111, 78, 55, 0.3);
 }
 
 .add-to-cart-btn:disabled {
-  background: #e5e7eb;
-  color: #9ca3af;
+  background: #d7ccc8;
+  color: #8d6e63;
   cursor: not-allowed;
 }
 
-/* LOADING */
-.loading {
+/* ================= MAIN TITLE ================= */
+.products-title {
+  position: relative;
   text-align: center;
-  margin-top: 120px;
+
+  font-size: 32px;
+  font-weight: 800;
+  color: #4a3728;
+
+  margin-bottom: 50px;
+  display: inline-block;
+
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* left & right rounded underline */
+.products-title::before,
+.products-title::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  width: 42px;
+  height: 6px;
+  background: #6f4e37;
+  border-radius: 999px;
+}
+
+.products-title::before {
+  left: -60px;
+}
+
+.products-title::after {
+  right: -60px;
+}
+
+/* ================= CATEGORY TITLE ================= */
+.category-title {
+  position: relative;
+  left: 30px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #6f4e37;
+
+  margin-bottom: 25px;
+  margin-top: 40px;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+/* animated underline */
+.category-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 0;
+  height: 4px;
+  background: #6f4e37;
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.category-title.active::after {
+  width: 100%;
 }

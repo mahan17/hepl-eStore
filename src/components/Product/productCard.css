@@ -1,103 +1,132 @@
 /* ProductCard.css */
 
 .product-card-ui {
-  
-  /* background: #ffffff; */
   margin-left: 30px;
+  background: rgba(255, 252, 242, 0.4); /* Warm cream glass */
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 22px;
   padding: 16px;
   width: 260px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  box-shadow: 0 15px 35px rgba(94, 73, 46, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-family: 'Trebuchet MS', sans-serif;
 }
 
 .product-card-ui:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(74, 55, 40, 0.15);
+  background: rgba(255, 252, 242, 0.7);
 }
 
-/* IMAGE */
+/* IMAGE BOX - Warm Gradient */
 .product-image-box {
-  background: linear-gradient(135deg, #e0f2ff, #fef3c7);
+  background: linear-gradient(135deg, #fffcf2, #f5ebe0);
   border-radius: 18px;
   padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-
   height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle inner glow for the image box */
+.product-image-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  box-shadow: inset 0 0 15px rgba(215, 190, 160, 0.2);
 }
 
 .product-image-box img {
- max-width: 100%;
+  max-width: 100%;
   max-height: 140px;
   object-fit: contain;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.05));
+  transition: transform 0.3s ease;
+}
+
+.product-card-ui:hover .product-image-box img {
+  transform: scale(1.05) rotate(4deg);
 }
 
 /* INFO */
 .product-info {
-  margin-top: 10px;
+  margin-top: 15px;
 }
-.product-title {
-  font-weight: 600;
-}
-
-.product-title span {
-  color: #64748b;
-  font-size: 13px;
-}
-
 
 .product-info h4 {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 4px;
+  color: #4a3728; /* Deep Roast Brown */
+  min-height: 42px; /* Maintains alignment */
 }
 
 .product-info .category {
-  font-size: 13px;
-  color: #6b7280;
+  font-size: 12px;
+  color: #a68b6d; /* Soft Latte */
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 600;
 }
 
-/* PRICE */
+/* PRICE & RATING */
 .price-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
 .price {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
+  color: #6f4e37; /* Coffee Brown */
 }
 
 .rating {
-  font-size: 13px;
-  color: #f59e0b;
+  background: #fdfaf5;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #c99a2e; /* Golden Brown */
+  border: 1px solid #f3e9dc;
 }
 
-/* BUTTON */
+/* BUTTON - Espresso Theme */
 .add-btn {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border-radius: 14px;
   border: none;
-  background: #111827;
-  color: #fff;
+  background: #6f4e37; 
+  color: #fffcf2;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s ease;
+  box-shadow: 0 4px 10px rgba(111, 78, 55, 0.2);
+  transition: all 0.3s ease;
 }
 
 .add-btn:hover {
-  background: #1f2937;
+  background: #4a3728;
+  box-shadow: 0 6px 15px rgba(74, 55, 40, 0.3);
+  transform: scale(1.02);
+}
+
+.add-btn:active {
+  transform: scale(0.98);
 }
 
 .add-btn:disabled {
-  background: #9ca3af;
+  background: #d7ccc8;
+  color: #8d6e63;
   cursor: not-allowed;
+  box-shadow: none;
 }

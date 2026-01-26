@@ -69,16 +69,16 @@ const Profile = () => {
       <div className="profile-page">
         <div className="profile-card">
           <div className="profile-header">
-            <img
+            {/* <img
               src={profilePic || "/default-avatar.png"}
               alt="Profile"
               className="profile-img"
-            />
-
+            /> */}
+{/* 
             <label className="upload-btn">
               Change Photo
               <input type="file" hidden onChange={handlePhotoUpload} />
-            </label>
+            </label> */}
 
             <h2>{address ? address.fullName : "No address saved"}</h2>
             <p>{user.email}</p>

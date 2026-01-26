@@ -36,7 +36,7 @@
   width: 100%;
   padding: 10px;
   margin: 20px;
-  background: #16a34a;
+  background: #f2bd55;
   color: white;
   border: none;
   border-radius: 10px;
@@ -45,13 +45,13 @@
 }
 
 .save-address-btn:hover {
-  background: #15803d;
+  background: #050300;
 }
 
 .address-success {
   margin-top: 8px;
-  font-size: 13px;
-  color: #16a34a;
+  font-size: 20px;
+  color: #1ba316;
   text-align: center;
 }
 
@@ -59,7 +59,7 @@
   width: 100%;
   padding: 10px;
   margin: 20px;
-  background: #16a34a;
+  background: #f2bd55;
   color: white;
   border: none;
   border-radius: 10px;
@@ -68,5 +68,5 @@
 }
 
 .clear-address-btn:hover{
-  background: #15803d;
+  background: #0e0a01;
 }

@@ -4,7 +4,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-/* 🔹 REGISTER */
+/* REGISTER */
 router.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
     const user = new User({
       username,
       password: hashedPassword,
-      role: "user", // ✅ default role
+      role: "user", // default role
     });
 
     await user.save();

@@ -17,7 +17,7 @@ const ProductCard = ({ product, onAdd, isInCart }) => {
         <>
           {title}
           <span
-            style={{ color: "#9ca3af", cursor: "pointer" }}
+            style={{ color: "#a68b6d", cursor: "pointer", fontWeight: "bold" }}
             onClick={() => setShowFullTitle(false)}
           >
             {" "}less
@@ -31,7 +31,7 @@ const ProductCard = ({ product, onAdd, isInCart }) => {
       <>
         {words.slice(0, wordLimit).join(" ")}
         <span
-          style={{ color: "#9ca3af", cursor: "pointer" }}
+          style={{ color: "#a68b6d", cursor: "pointer", fontWeight: "bold" }}
           onClick={() => setShowFullTitle(true)}
         >
           {" "}...more
