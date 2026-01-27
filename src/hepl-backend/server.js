@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+
 import express from "express";
 import mongoose from "mongoose";
 import authRoutes from './middleware/auth.js';
@@ -38,6 +39,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminDashboardRoutes);
 app.use("/uploads", express.static("uploads"));
+console.log("Razorpay Key:", process.env.RAZORPAY_KEY_ID);
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/hepl")

@@ -102,6 +102,7 @@
         width: 100%;
         border-bottom: 2px solid var(--brown-medium);
         padding-bottom: 10px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode';
     }
 
     .sidebar-header h3 {

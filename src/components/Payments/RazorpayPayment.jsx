@@ -21,7 +21,7 @@ const RazorpayPayment = ({ amount, username, onSuccess }) => {
 
     // 2️⃣ Razorpay options
    const options = {
-    key: "",
+    key: "rzp_test_S6q9WqWXqErR9s",
     amount: order.amount,
     currency: "INR",
     name: "HEPL eStore",

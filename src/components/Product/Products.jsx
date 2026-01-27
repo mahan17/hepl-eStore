@@ -2,8 +2,9 @@ import { fetchProducts } from '../store/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveUserCart } from "../store/cartSlice";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
+import ProductModal from "./ProductModal";
 
 import ProductSkeleton from './ProductSkeleton';
 import './products.css';
@@ -13,10 +14,11 @@ const Products = () => {
   const cartItems = useSelector(state => state.cart.items);
   const searchQuery = useSelector(state => state.search.query);
   const username = useSelector(state => state.login.username);
-
   const { items, selectedCategory, status } = useSelector(
     (state) => state.products
   );
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   let filteredProducts =
     selectedCategory === 'all'
@@ -66,7 +68,7 @@ const Products = () => {
   }
   
 return (
-  <section className="products-container">
+  <section className="products-container" id="products">
     {/* Top Title */}
     <h2 className="products-title">Products</h2>
 
@@ -90,6 +92,7 @@ return (
                 key={product._id}
                 product={product}
                 isInCart={isInCart}
+                onClick={() => setSelectedProduct(product)}
                 onAdd={(product) => {
                   if (!username) {
                     alert("Please login to add items to cart");
@@ -116,10 +119,17 @@ return (
                 }}
               />
             );
+
           })}
         </div>
       </div>
     ))}
+    
+    <ProductModal
+      product={selectedProduct}
+      onClose={() => setSelectedProduct(null)}
+    />
+
   </section>
 );
 };

@@ -24,7 +24,7 @@ router.get("/dashboard", async (req, res) => {
     res.json({
       usersGrowth: usersGrowth.map(u => ({ month: `M${u._id}`, count: u.count })),
       ordersMonthly: ordersMonthly.map(o => ({ month: `M${o._id}`, orders: o.orders })),
-      productsByCategory: productsByCategory.map(p => ({ name: p._id, value: p.value }))
+      productsByCategory: productsByCategory.map(p => ({ name: p._id, value: p.value })),
     });
   } catch (err) {
     res.status(500).json({ message: "Dashboard API error" });

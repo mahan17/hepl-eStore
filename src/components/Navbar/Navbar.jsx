@@ -7,6 +7,7 @@ import { loginActions } from '../store/uiLogin';
 import { cartActions } from '../store/cartSlice'; 
 
 import { FaHome, FaShoppingCart, FaUserCircle, FaBoxOpen, FaBars, FaTimes, FaSearch } from 'react-icons/fa';
+import { HiMiniArrowUturnRight } from "react-icons/hi2";
 
 import SearchBar from '../searchBar/SearchBar';
 import './navbar.css';
@@ -73,7 +74,7 @@ const Navbar = ({
           {/* <img src={logo} alt="HEPL Logo" className="navbar-logo" /> */}
           <div className="brand-text">
             {/* <h1>HEPL</h1> */}
-            <span><h1>ShopEase</h1></span>
+            <span><h1><HiMiniArrowUturnRight /> ShopEase </h1></span>
           </div>
         </div>
         {/* ----------- */}

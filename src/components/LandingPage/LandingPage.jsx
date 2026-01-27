@@ -4,6 +4,7 @@ import "./landingPage.css";
 import bgImage from "../../assets/images/landingPage.png"; 
 
 const LandingPage = () => {
+
   const handleStartShopping = () => {
     const productsSection = document.getElementById("products");
     productsSection?.scrollIntoView({ behavior: "smooth" });

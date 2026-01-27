@@ -2,8 +2,8 @@
 /* Sidebar */
 .admin-sidebar {
   width: 240px;
-  background-color: #1e293b;
-  color: #09a0e7;
+  background-color: #040300;
+  color: #eb9b55;
   position: fixed;
   top: 0;
   left: 0;
@@ -43,7 +43,7 @@
 
 /* Hover effect */
 .sidebar-menu li:hover {
-  background-color: #334155;
+  background-color: #f6d67f;
   transform: scale3d(1.2);
 }
 /* Active link */
@@ -54,9 +54,10 @@
 }
 
 .sidebar-menu a.active {
-  background-color: #6892e6;
+  background-color: #ffffff;
   border-radius: 8px;
   padding: 10px;
+  color: #040300;
 }
 
 /* Right content cards */
