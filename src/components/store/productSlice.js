@@ -16,6 +16,7 @@ const productsSlice = createSlice({
     selectedCategory: 'all',
     status: 'idle',
   },
+  
   reducers: {
     setCategory(state, action) {
       state.selectedCategory = action.payload;

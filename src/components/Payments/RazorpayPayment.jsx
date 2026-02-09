@@ -31,9 +31,9 @@ const RazorpayPayment = ({ amount, username, onSuccess }) => {
     // 🔥 FORCE ONLY UPI
     method: {
       upi: true,
-      card: false,
-      netbanking: false,
-      wallet: false,
+      card: true,
+      netbanking: true,
+      wallet: true,
     },
 
     // 🔥 HIDE DEFAULT BLOCKS (removes login-like UI)

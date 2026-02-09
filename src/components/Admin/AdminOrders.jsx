@@ -1,6 +1,14 @@
-import { useEffect, useState } from "react";
-import { Fragment } from "react";
+import { useEffect, useState, Fragment } from "react";
+import { AgGridReact } from "ag-grid-react";
+import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
+
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
 import "./adminOrders.css";
+
+// Register AG Grid Community modules
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 const AdminOrders = () => {
   const [groupedOrders, setGroupedOrders] = useState({});
@@ -12,11 +20,11 @@ const AdminOrders = () => {
       .then(data => {
         const grouped = data.reduce((acc, order) => {
           if (!acc[order.username]) acc[order.username] = [];
-          acc[order.username].push(order);
-          return acc;
-        }, {});
-        setGroupedOrders(grouped);
-      })
+            acc[order.username].push(order);
+            return acc;
+          }, {});
+          setGroupedOrders(grouped);
+        })
       .catch(console.error);
   }, []);
 
@@ -30,72 +38,94 @@ const AdminOrders = () => {
 
       {Object.keys(groupedOrders).length === 0 && <p>No orders found</p>}
 
-      <table className="admin-orders-table">
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Total Orders</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+      {Object.entries(groupedOrders).map(([username, orders]) => (
+        <Fragment key={username}>
+          {/* USER GRID */}
+          <div
+            className="ag-theme-quartz"
+            style={{ height: 300, width: "100%" }}
+          >
+            <AgGridReact
+              rowData={[
+                {
+                  username,
+                  totalOrders: orders.length
+                }
+              ]}
+              columnDefs={[
+                { field: "username", headerName: "User", flex: 1 },
+                {
+                  field: "totalOrders",
+                  headerName: "Total Orders",
+                  width: 160
+                },
+                {
+                  headerName: "Action",
+                  width: 160,
+                  cellRenderer: () => (
+                    <button
+                      className="toggle-btn"
+                      onClick={() => toggleUser(username)}
+                    >
+                      {openUser === username
+                        ? "Hide Orders"
+                        : "View Orders"}
+                    </button>
+                  )
+                }
+              ]}
+              headerHeight={40}
+              rowHeight={40}
+              suppressRowClickSelection
+            />
+          </div>
 
-        <tbody>
-          {Object.entries(groupedOrders).map(([username, orders]) => (
-            <Fragment key={username}>
-              {/* USER ROW */}
-              <tr className="user-row">
-                <td>{username}</td>
-                <td>{orders.length}</td>
-                <td>
-                  <button
-                    className="toggle-btn"
-                    onClick={() => toggleUser(username)}
-                  >
-                    {openUser === username ? "Hide Orders" : "View Orders"}
-                  </button>
-                </td>
-              </tr>
-
-              {/* EXPANDED ORDERS */}
-              {openUser === username && (
-                <tr className="orders-expand-row">
-                  <td colSpan="3">
-                    <table className="user-orders-table">
-                      <thead>
-                        <tr>
-                          <th>Order ID</th>
-                          <th>Date</th>
-                          <th>Payment</th>
-                          <th>Items</th>
-                          <th>Total</th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        {orders.map(order => (
-                          <tr key={order._id}>
-                            <td>{order._id}</td>
-                            <td>{new Date(order.createdAt).toLocaleString()}</td>
-                            <td>{order.paymentMethod}</td>
-                            <td>
-                              {order.items.map(item => (
-                                <div key={item.productId}>
-                                  {item.title} × {item.quantity}
-                                </div>
-                              ))}
-                            </td>
-                            <td>₹ {order.totalAmount}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              )}
-            </Fragment>
-          ))}
-        </tbody>
-      </table>
+          {/* ORDERS GRID */}
+          {openUser === username && (
+            <div
+              className="ag-theme-alpine"
+              style={{ height: 300, marginBottom: 20 }}
+            >
+              <AgGridReact
+                rowData={orders}
+                columnDefs={[
+                  { field: "_id", headerName: "Order ID", flex: 1 },
+                  {
+                    field: "createdAt",
+                    headerName: "Date",
+                    width: 180,
+                    valueFormatter: p =>
+                      new Date(p.value).toLocaleString()
+                  },
+                  {
+                    field: "paymentMethod",
+                    headerName: "Payment",
+                    width: 150
+                  },
+                  {
+                    headerName: "Items",
+                    flex: 2,
+                    valueGetter: p =>
+                      p.data.items
+                        .map(i => `${i.title} × ${i.quantity}`)
+                        .join(", ")
+                  },
+                  {
+                    field: "totalAmount",
+                    headerName: "Total",
+                    width: 120,
+                    valueFormatter: p => `₹ ${p.value}`
+                  }
+                ]}
+                defaultColDef={{
+                  sortable: true,
+                  filter: true
+                }}
+              />
+            </div>
+          )}
+        </Fragment>
+      ))}
     </div>
   );
 };
