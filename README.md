@@ -56,6 +56,13 @@ A complete backend for an **E-Commerce application** built with **Node.js, Expre
 
 ## 🧱 Tech Stack
 
+### Frontend
+- React
+- Redux Toolkit
+- Redux Thunk
+- Material UI
+
+### Backend
 * Node.js
 * Express.js
 * MongoDB + Mongoose
@@ -63,7 +70,13 @@ A complete backend for an **E-Commerce application** built with **Node.js, Expre
 * Razorpay
 * JWT (Admin/Auth ready)
 * Multer (Image upload)
+  
+### Payments
+- Razorpay
 
+### Tools
+- JWT Authentication
+- Multer (Image Upload)
 ---
 
 ## 📁 Project Structure
