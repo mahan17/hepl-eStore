@@ -1,16 +1,237 @@
-# React + Vite
+# 🛒 E-Commerce Backend API
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A complete backend for an **E-Commerce application** built with **Node.js, Express, MongoDB**, featuring **cart, orders, admin management, Razorpay payments**, and **Swagger API documentation**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+### 👤 User
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* User management
+* User-specific cart
+* Address management
+* Order placement & order history
 
-## Expanding the ESLint configuration
+### 🛒 Cart
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* Get cart by username
+* Increment / Decrement / Remove cart items
+* Save full cart
+* Clear cart after checkout
+
+### 📦 Orders
+
+* Create order (COD / Razorpay)
+* Fetch orders by user
+* Admin fetch all orders
+* Admin update order status
+* Admin delete orders
+
+### 👮 Admin
+
+* Admin dashboard analytics
+* Manage users
+* Delete user with cascading cleanup:
+
+  * Cart
+  * Orders
+  * Address
+* Manage all orders
+
+### 💳 Payments
+
+* Razorpay order creation
+* Razorpay payment verification
+* Secure signature validation
+* Auto clear cart after successful payment
+
+### 📄 API Documentation
+
+* Swagger UI for all APIs
+* File upload support
+* JWT-ready security structure
+
+---
+
+## 🧱 Tech Stack
+
+* Node.js
+* Express.js
+* MongoDB + Mongoose
+* Swagger (OpenAPI 3.0)
+* Razorpay
+* JWT (Admin/Auth ready)
+* Multer (Image upload)
+
+---
+
+## 📁 Project Structure
+
+```
+backend/
+├── models/
+│   ├── User.js
+│   ├── Product.js
+│   ├── Cart.js
+│   ├── Order.js
+│   └── Address.js
+│
+├── routes/
+│   ├── productRoutes.js
+│   ├── cartRoutes.js
+│   ├── orderRoutes.js
+│   ├── addressRoutes.js
+│   ├── paymentRoutes.js
+│   ├── adminRoutes.js
+│   ├── adminUserRoutes.js
+│   └── adminDashboardRoutes.js
+│
+├── middleware/
+│   ├── adminAuth.js
+│   └── upload.js
+│
+├── swagger/
+│   └── swagger.js
+│
+├── uploads/
+├── server.js
+├── package.json
+└── README.md
+```
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env` file in the root:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection
+JWT_SECRET=your_jwt_secret
+
+RAZORPAY_KEY_ID=your_key_id
+RAZORPAY_KEY_SECRET=your_key_secret
+```
+
+---
+
+## ▶️ Running the Project
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start server
+
+```bash
+npm start
+```
+
+Server will run on:
+
+```
+http://localhost:5000
+```
+
+---
+
+## 📘 Swagger API Documentation
+
+Swagger UI is enabled for **all routes**.
+
+Open in browser:
+
+```
+http://localhost:5000/api-docs
+```
+
+Features:
+
+* Test APIs directly
+* Upload images (multipart/form-data)
+* View request & response schemas
+* JWT Authorize button (for admin APIs)
+
+---
+
+## 🔐 Authentication & Authorization
+
+* Admin routes are protected using `adminAuth` middleware
+* JWT-based authentication structure is ready
+* Swagger supports Bearer Token authorization
+
+---
+
+## 🛍️ Order Flow
+
+1. User adds items to cart
+2. User selects payment method:
+
+   * COD → Direct order creation
+   * Razorpay → Payment gateway
+3. On successful payment:
+
+   * Order is saved
+   * Cart is cleared automatically
+
+---
+
+## 📊 Admin Dashboard Analytics
+
+Admin dashboard API provides:
+
+* Monthly user growth
+* Monthly orders count
+* Product distribution by category
+
+Used for charts in admin panel.
+
+---
+
+## 🧹 Data Integrity Rules
+
+* Admin users **cannot be deleted**
+* Deleting a user also deletes:
+
+  * Cart
+  * Orders
+  * Address
+* Cart auto-clears after successful order
+
+---
+
+## ✅ API Modules Covered
+
+| Module              | Status |
+| ------------------- | ------ |
+| Products            | ✅      |
+| Cart                | ✅      |
+| Orders              | ✅      |
+| Address             | ✅      |
+| Payments (Razorpay) | ✅      |
+| Admin Users         | ✅      |
+| Admin Orders        | ✅      |
+| Admin Dashboard     | ✅      |
+| Swagger Docs        | ✅      |
+
+---
+
+## 📌 Future Improvements
+
+* Role-based access (Admin / Staff / User)
+* Refresh tokens
+* Order invoice generation
+* Pagination & filtering
+* Redis caching
+* Deployment-ready Swagger JSON
+
+---
+
+## 👨‍💻 Author
+
+E-Commerce Backend Project
+Built with ❤️ using Node.js, Express & MongoDB
