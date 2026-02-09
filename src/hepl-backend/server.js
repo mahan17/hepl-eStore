@@ -4,6 +4,8 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import authRoutes from './middleware/auth.js';
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./swagger/swagger.js";
 
 import cors from "cors";
 import path from "path";
@@ -18,6 +20,9 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 import adminDashboardRoutes from "./routes/adminDashboard.js";
 
 const app = express();
+
+// Swagger UI
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));

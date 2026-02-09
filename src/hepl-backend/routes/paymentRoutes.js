@@ -6,9 +6,38 @@ import Cart from "../models/Cart.js";
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Payments
+ *   description: Razorpay payment and order verification
+ */
+
 /* ===========================
    CREATE ORDER
 =========================== */
+/**
+ * @swagger
+ * /api/payments/create-order:
+ *   post:
+ *     summary: Create Razorpay order
+ *     tags: [Payments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - amount
+ *             properties:
+ *               amount:
+ *                 type: number
+ *                 example: 1499
+ *     responses:
+ *       200:
+ *         description: Razorpay order created successfully
+ */
 router.post("/create-order", async (req, res) => {
   const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -29,6 +58,45 @@ router.post("/create-order", async (req, res) => {
 /* ===========================
    VERIFY + SAVE ORDER
 =========================== */
+/**
+ * @swagger
+ * /api/payments/verify:
+ *   post:
+ *     summary: Verify Razorpay payment and save order
+ *     tags: [Payments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - razorpay_order_id
+ *               - razorpay_payment_id
+ *               - razorpay_signature
+ *               - username
+ *               - amount
+ *             properties:
+ *               razorpay_order_id:
+ *                 type: string
+ *                 example: order_LkP9XYZ
+ *               razorpay_payment_id:
+ *                 type: string
+ *                 example: pay_LkP9ABC
+ *               razorpay_signature:
+ *                 type: string
+ *               username:
+ *                 type: string
+ *                 example: john_doe
+ *               amount:
+ *                 type: number
+ *                 example: 1499
+ *     responses:
+ *       200:
+ *         description: Payment verified and order saved
+ *       400:
+ *         description: Invalid signature or cart empty
+ */
 router.post("/verify", async (req, res) => {
   const {
     razorpay_order_id,
@@ -49,14 +117,12 @@ router.post("/verify", async (req, res) => {
     return res.status(400).json({ success: false });
   }
 
-  // ✅ GET CART ITEMS
   const cart = await Cart.findOne({ username });
 
   if (!cart || cart.items.length === 0) {
     return res.status(400).json({ error: "Cart empty" });
   }
 
-  // ✅ SAVE ORDER
   const newOrder = new Order({
     username,
     items: cart.items,
@@ -67,7 +133,6 @@ router.post("/verify", async (req, res) => {
 
   await newOrder.save();
 
-  // ✅ CLEAR CART (DB)
   cart.items = [];
   cart.totalQuantity = 0;
   cart.totalAmount = 0;

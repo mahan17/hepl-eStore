@@ -4,7 +4,28 @@ import Cart from "../models/Cart.js";
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Orders
+ *   description: User and admin order management
+ */
+
 /* 🔴 ADMIN – GET ALL ORDERS (MUST BE FIRST) */
+/**
+ * @swagger
+ * /api/orders/admin/all:
+ *   get:
+ *     summary: Get all orders (Admin)
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: All orders fetched successfully
+ *       500:
+ *         description: Failed to fetch admin orders
+ */
 router.get("/admin/all", async (req, res) => {
   try {
     const orders = await Order.find().sort({ createdAt: -1 });
@@ -16,6 +37,25 @@ router.get("/admin/all", async (req, res) => {
 });
 
 /* 🟢 USER – GET ORDERS BY USERNAME */
+/**
+ * @swagger
+ * /api/orders/{username}:
+ *   get:
+ *     summary: Get orders for a user
+ *     tags: [Orders]
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: john_doe
+ *     responses:
+ *       200:
+ *         description: User orders fetched successfully
+ *       500:
+ *         description: Failed to fetch orders
+ */
 router.get("/:username", async (req, res) => {
   try {
     const { username } = req.params;
@@ -30,6 +70,36 @@ router.get("/:username", async (req, res) => {
 });
 
 /* 🟢 CREATE ORDER */
+/**
+ * @swagger
+ * /api/orders:
+ *   post:
+ *     summary: Create a new order
+ *     tags: [Orders]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - paymentMethod
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: john_doe
+ *               paymentMethod:
+ *                 type: string
+ *                 example: COD
+ *     responses:
+ *       201:
+ *         description: Order created successfully
+ *       400:
+ *         description: Cart empty
+ *       500:
+ *         description: Order creation failed
+ */
 router.post("/", async (req, res) => {
   try {
     const { username, paymentMethod } = req.body;
