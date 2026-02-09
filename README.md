@@ -1,3 +1,9 @@
+![React](https://img.shields.io/badge/React-18-blue)
+![Redux](https://img.shields.io/badge/Redux-Toolkit-purple)
+![Node](https://img.shields.io/badge/Node.js-18-green)
+![Express](https://img.shields.io/badge/Express-black)
+![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-green)
+![Material UI](https://img.shields.io/badge/MUI-5-blue)
 # 🛒 E-Commerce Backend API
 
 A complete backend for an **E-Commerce application** built with **Node.js, Express, MongoDB**, featuring **cart, orders, admin management, Razorpay payments**, and **Swagger API documentation**.
