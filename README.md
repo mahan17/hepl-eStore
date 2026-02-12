@@ -250,7 +250,7 @@ Used for charts in admin panel.
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 Author: Mahan
 
 E-Commerce Backend Project
 Built with ❤️ using Node.js, Express & MongoDB
